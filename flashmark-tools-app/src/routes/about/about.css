@@ -1,0 +1,6 @@
+article {
+    background-color: var(--swatch--secondary);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    margin: .75rem;
+    }

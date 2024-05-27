@@ -1,0 +1,39 @@
+/**
+ * Tailwind CSS imports
+ * View the full documentation at https://tailwindcss.com
+ */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+--swatch--dark: #010717;
+--swatch--light: #f1f1f1;
+--swatch--brand: #ffb429;
+--swatch--accent: #f5584d;
+--swatch--accent-fade: rgba(245, 88, 77, 0.75);
+--swatch--accent-2: #abdd67;
+--swatch--aceent-3: #0888aa;
+--swatch--secondary: #c1c6d3;
+--swatch--secondary-fade: rgba(173, 182, 207, 0.5);
+--swatch--secondary-fade-dark: rgba(24, 25, 29, 0.5);
+}
+
+body {
+    font-family: Outfit, sans-serif;
+    margin: 0;
+    background: var(--swatch--light);
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    color: var(--swatch--dark);
+    font-size: 1rem;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: 'Brigends Expanded', sans-serif;
+    font-weight: bold;
+    color: var(--swatch--dark);
+    margin: 0;
+    font-size: 1.8rem;
+}
