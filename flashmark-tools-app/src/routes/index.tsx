@@ -3,14 +3,14 @@ import type { DocumentHead } from "@builder.io/qwik-city";
 
 export default component$(() => {
   return (
-    <>
+    <div>
       <h1>Welcom to Flashmark.tools 👋</h1>
       <div>
         Can't wait to see what you build with qwik!
         <br />
         Happy coding.
       </div>
-    </>
+    </div>
   );
 });
 
