@@ -1,0 +1,55 @@
+sequence-diagram
+
+title Flashmark.profiler Workflow
+
+// Define actors with icons and colors
+User [icon: user, color: blue]
+WebApp [icon: monitor, color: green]
+SuperAgent [icon: tool, color: orange]
+Supabase [icon: database, color: purple]
+Airtable [icon: cloud, color: red]
+
+// User initiates the process
+User > WebApp: Access website
+activate User
+
+// WebApp authenticates the user
+WebApp > Supabase: Authenticate user
+Supabase --> WebApp: Authentication success
+
+// User inputs URL for analysis
+User > WebApp: Input website URL
+WebApp > Airtable: Send URL for analysis
+
+// SuperAgent starts content analysis
+activate WebApp
+Airtable > SuperAgent: Start content analysis
+
+// Loop until analysis is complete
+loop [label: until analysis complete, color: lightblue] {
+    SuperAgent > SuperAgent: Scan website content
+    SuperAgent > SuperAgent: Evaluate data
+}
+
+// SuperAgent sends analysis to Airtable
+SuperAgent > Airtable: Send analysis data
+Airtable --> SuperAgent: Data received
+
+// Airtable sends generated User persona data to WebApp
+Airtable > WebApp: Send persona data
+
+// WebApp generates personas based on analysis
+WebApp > WebApp: Generate customer personas
+
+// Conditional block for persona generation
+alt [label: personas generated, color: green] {
+    WebApp --> User: Display personas
+}
+else [label: error in generation, color: red] {
+    WebApp --> User: Display error message
+}
+
+// Deactivate actors
+deactivate WebApp
+deactivate User
+
