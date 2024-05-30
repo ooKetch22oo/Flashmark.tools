@@ -20,7 +20,7 @@ const Icon = (props: IconProps) => {
 
 export const Logo = component$(() => {
   return (
-    <section class="flex justify-center items-center self-center p-4 w-36 max-w-full rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950">
+    <section class="flex justify-center items-center self-center p-4 w-36 h-36 max-w-full rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 hover:border-b-[4px] hover:border-r-[4px]">
       <div class="box-border flex relative flex-col shrink-0">
         <Icon 
           width="112"

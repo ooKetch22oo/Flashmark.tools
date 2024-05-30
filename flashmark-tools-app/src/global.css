@@ -37,3 +37,15 @@ h1, h2, h3, h4, h5, h6 {
     margin: 0;
     font-size: 1.8rem;
 }
+
+.logo {
+    font-family: 'Yanone Kaffeesatz', sans-serif;
+    font-weight: bold;
+    color: var(--swatch--dark);
+    margin: -0.75rem;
+    font-size: 4rem;
+}
+
+* {
+    transition: 300ms;
+}
