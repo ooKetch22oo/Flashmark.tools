@@ -19,9 +19,11 @@ export default component$(() => {
   <main>
     <div class= 'flex min-h-screen bg-green-400'>
       <NavSidebar />
-      <div class="flex flex-col flex-1 my-auto px-4 h-[95svh]">
+      <div class="flex flex-col gap-4 flex-1 my-auto px-4 max-h-[95svh] overflow-auto">
       <DashHeader title="Flashmark.tools" />
+      <div class="flex flex-col self-stretch w-full rounded-lg border-t-4 border-l-4 border-solid bg-zinc-100 border-b-[12px] border-r-[12px] border-slate-950 overflow-hidden">
       <Slot />
+      </div>
       </div>
     </div>
   </main>

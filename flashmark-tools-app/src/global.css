@@ -17,6 +17,7 @@
 --swatch--secondary: #c1c6d3;
 --swatch--secondary-fade: rgba(173, 182, 207, 0.5);
 --swatch--secondary-fade-dark: rgba(24, 25, 29, 0.5);
+
 }
 
 body {
@@ -35,7 +36,7 @@ h1, h2, h3, h4, h5, h6 {
     font-weight: bold;
     color: var(--swatch--dark);
     margin: 0;
-    font-size: 1.8rem;
+    font-size: 1.2rem;
 }
 
 .logo {
@@ -45,6 +46,11 @@ h1, h2, h3, h4, h5, h6 {
     margin: -0.75rem;
     font-size: 4rem;
 }
+
+.multi-columns {
+    columns: 2;
+    column-gap: 2em;
+  }
 
 * {
     transition: 300ms;
