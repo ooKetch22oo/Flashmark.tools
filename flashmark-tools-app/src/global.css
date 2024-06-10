@@ -55,3 +55,18 @@ h1, h2, h3, h4, h5, h6 {
 * {
     transition: 300ms;
 }
+
+.asym-borders {
+    border-style: solid;
+    border-color: var(--swatch--dark);
+    background-color: var(--swatch--light);
+    border-top-width: .25rem;
+    border-right-width: .75rem;
+    border-bottom-width: .75rem;
+    border-left-width: .25rem;
+    border-radius: .5rem;
+    }
+/* .asym-borders:hover {
+    border-right-width: .25rem;
+    border-bottom-width: .25rem;
+} */

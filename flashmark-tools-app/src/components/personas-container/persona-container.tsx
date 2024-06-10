@@ -15,7 +15,7 @@ const DemographicItem = component$(({ title, value }: PropsType) => (
 ));
 
 const PersonaDetails = component$(({ title, bio, background }: { title: string; bio: string ; background: string}) => (
-  <div class="flex flex-col gap-1 justify-start self-stretch px-4 pt-2 pb-5 w-auto h-full max-h-[16rem] overflow-auto rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 grow-0">
+  <div class="flex flex-col gap-1 justify-start self-stretch px-4 pt-2 pb-5 w-auto h-full max-h-[16rem] overflow-auto rounded-lg asym-borders">
     <h2 class="text-base font-bold leading-8 max-md:max-w-full">{title}</h2>
     <div class="flex flex-col justify-start self-start w-auto">
 <div class={`justify-center px-2 py-1 mt-2 text-base font-medium leading-7 rounded-lg ${background}`}>{bio}</div>    </div>
@@ -29,7 +29,7 @@ export const Persona = component$(() => {
         <h1 class="my-auto text-3xl font-semibold leading-10 text-slate-950">Persona Name</h1>
         <BackBtn />
       </header>
-      <section class="flex flex-col gap-4 justify-between px-4 pb-4 w-full max-md:max-w-full overflow-auto max-h-[70svh]">
+      <section class="flex flex-col gap-4 justify-between px-4 pb-4 w-full max-md:max-w-full overflow-y-auto overflow-x-hidden h-[70.15svh]">
         <aside class="box-border flex relative pt-4 flex-row grow shrink-0 gap-4 w-auto">
           <PersonaTitleCard
             title="Title"
@@ -37,16 +37,6 @@ export const Persona = component$(() => {
             mainImage="https://images.pexels.com/photos/24613542/pexels-photo-24613542.jpeg?auto=compress&cs=tinysrgb&h=350"
             images={["https://images.pexels.com/photos/24988214/pexels-photo-24988214.jpeg?auto=compress&cs=tinysrgb&h=350", "https://images.pexels.com/photos/25007817/pexels-photo-25007817.jpeg?auto=compress&cs=tinysrgb&h=350", "https://images.pexels.com/photos/24836833/pexels-photo-24836833.jpeg?auto=compress&cs=tinysrgb&h=350"]}
           />
-          {/* <div class="flex flex-col gap-4 justify-between self-stretch p-4 w-3/12 h-auto max-h-full rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 grow-0 max-w-[20%] min-w-[20%] max-md:grow max-md:w-full max-md:min-w-full max-md:max-w-full">
-            <div class="box-border flex relative flex-col shrink-0 h-3/5 rounded-lg border-t-4 border-l-4 border-solid border-[black] border-b-[12px] border-r-[12px]"></div>
-            <h2 class="text-base font-medium leading-8 text-slate-950">Persona Title</h2>
-            <div class="text-lg leading-7 text-slate-950">Summary about the user persona</div>
-            <div class="flex justify-between h-20">
-              <div class="flex grow gap-1 justify-between self-stretch w-auto h-full max-h-20 rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 max-w-[5rem]"></div>
-              <div class="flex grow gap-1 justify-between self-stretch w-auto h-full max-h-20 rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 max-w-[5rem]"></div>
-              <div class="flex grow gap-1 justify-between self-stretch w-auto h-full max-h-20 rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 max-w-[5rem]"></div>
-            </div>
-          </div> */}
           <main class="box-border flex relative flex-row flex-wrap grow shrink-0 gap-4 justify-between self-stretch pr-4 w-full max-w-[80%] max-md:flex max-md:flex-col">
             <section class="box-border flex relative flex-row grow gap-4 justify-start max-w-full max-md:flex max-md:flex-col">
               <article class="box-border flex relative flex-col shrink-0 gap-4 justify-around self-stretch h-full min-w-[24rem] max-w-[40%] max-md:flex max-md:flex-row max-md:w-full max-md:max-w-full">
@@ -55,7 +45,7 @@ export const Persona = component$(() => {
                   bio="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur."
                   background=""
                 />
-                <div class="flex flex-col gap-0 justify-between self-stretch px-4 pt-2 pb-5 w-auto h-full max-h-1/2  rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 grow-0">
+                <div class="flex flex-col gap-0 justify-between self-stretch px-4 pt-2 pb-5 w-auto h-full max-h-1/2 rounded-lg asym-borders">
                   <h2 class="text-base font-bold leading-8 max-md:max-w-full">Demographics</h2>
                   <DemographicItem title="Age" value="" />
                   <DemographicItem title="Gender" value="" />
