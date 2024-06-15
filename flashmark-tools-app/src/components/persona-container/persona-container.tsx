@@ -1,11 +1,15 @@
-import { component$ } from "@builder.io/qwik";
+import { component$, useStore, useTask$ } from '@builder.io/qwik';
 import { BackBtn } from "../back-btn/back-btn";
 import { PersonaTitleCard } from "../persona-title-card/persona-title-card";
+import { useLocation } from '@builder.io/qwik-city';
+import { supabase } from '../../supabase';
 
 type PropsType = {
   title: string;
   value: string;
 };
+
+
 
 const DemographicItem = component$(({ title, value }: PropsType) => (
   <div class="flex gap-2.5 mt-2 max-md:flex-wrap">
@@ -23,6 +27,8 @@ const PersonaDetails = component$(({ title, bio, background }: { title: string; 
 ));
 
 export const Persona = component$(() => {
+
+
   return (
     <div>
       <header class="flex gap-5 justify-between py-4 pr-5 pl-4 w-full border-b-4 border-black border-solid max-md:flex-wrap max-md:max-w-full ">
@@ -74,7 +80,7 @@ export const Persona = component$(() => {
             </section>
             <section class="box-border flex relative flex-row shrink-0 gap-4 w-full">
               <div class="flex flex-col grow justify-between p-4 w-6/12 text-lg leading-7 rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 text-slate-950 max-md:pr-5 max-md:mt-4 max-md:max-w-full">
-                <h2 class="text-base font-bold max-md:max-w-full">Brand</h2>
+                <h2 class="text-base font-bold max-md:max-w-full">Habits</h2>
                 <DemographicItem title="Other Brands" value="" />
                 <DemographicItem title="Purchases" value="" />
                 <DemographicItem title="Lifestyle" value="" />
