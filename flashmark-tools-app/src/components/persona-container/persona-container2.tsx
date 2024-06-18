@@ -1,8 +1,6 @@
 import { component$} from '@builder.io/qwik';
 import { BackBtn } from "../back-btn/back-btn";
 import { PersonaTitleCard } from "../persona-title-card/persona-title-card";
-import { useLocation } from '@builder.io/qwik-city';
-import { supabase } from '../../supabase';
 
 type PropsType = {
   title: string;
@@ -12,17 +10,17 @@ type PropsType = {
 interface PersonaContainerProps {
   business: string;
   name: string;
-  images: string[];
   title: string;
+  images: string[];
   summary: string;
   age: number;
+  bio: string;
   gender: string;
   ethnicity: string;
   location: string;
   occupation: string;
   income_level: string;
   education_level: string;
-  bio: string;
   values_and_beliefs: string;
   needs: string;
   goals: string;
@@ -70,10 +68,9 @@ export const Persona = component$(( props: PersonaContainerProps ) => {
         <h1 class="my-auto text-3xl font-semibold leading-10 text-slate-950">
           {`${props.business ? `${props.business}:` : ''} Persona Profile - ${props.name }` || 'Loading...'}
         </h1>
-        <BackBtn />
       </header>
       <section class="flex flex-col gap-4 justify-between px-4 pb-4 w-full max-md:max-w-full overflow-y-auto overflow-x-hidden h-[70.15svh]">
-        <aside class="box-border flex relative pt-4 flex-row grow shrink-0 gap-4 w-auto">
+        <aside class="box-border flex relative pt-4 flex-row grow gap-4 h-auto w-auto">
           {props && (
             <>
               <PersonaTitleCard

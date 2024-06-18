@@ -1,4 +1,4 @@
-import { component$ } from '@builder.io/qwik';
+import { $, component$, useStore } from '@builder.io/qwik';
 import { useNavigate } from '@builder.io/qwik-city';
 
 interface PersonaCardProps {
@@ -11,24 +11,89 @@ interface PersonaCardProps {
   goals: string;
   needs: string;
   frustrations: string;
-  mainImageUrl: string;
-  extraImageUrls: string[];
+  mainImage: string;
+  images: string[];
   id: string;
 }
 
+interface State {
+  mainImage: string;
+  previousImage: string;
+  images: string[];
+  transitioning: boolean;
+}
+
+interface PropsType {
+  title: string;
+  value: string;
+}
+
+const DemographicItem = component$(({ title, value }: PropsType) => (
+  <div class="flex gap-2.5 mt-2 max-md:flex-wrap">
+    <div class="font-semibold text-base">{title}:</div>
+    <div class="flex-1 max-md:max-w-full text-base">{value}</div>
+  </div>
+));
+
+const PsychographicItem = component$(({ title, value }: PropsType) => (
+  <div class="flex flex-col gap-2.5 mt-2 max-md:flex-wrap">
+    <div class="font-semibold text-base">{title}:</div>
+    <div class="flex-1 max-md:max-w-full text-base">{value}</div>
+  </div>
+));
+
+const PersonaDetails = component$(({ title, bio, background }: { title: string; bio: string ; background: string}) => (
+  <div class="flex flex-col gap-1 justify-start self-stretch px-4 pt-2 pb-5 w-auto h-full max-h-1/2 overflow-auto rounded-lg asym-borders">
+    <h2 class="text-base font-bold leading-8 max-md:max-w-full">{title}</h2>
+    <div class="flex flex-col justify-start self-start w-auto">
+      <div class={`justify-center px-2 py-1 mt-2 text-base font-medium leading-7 rounded-lg ${background}`}>{bio}</div>
+    </div>
+  </div>
+));
+
 export const PersonaCard = component$((props: PersonaCardProps) => {
   const nav = useNavigate();
+
+  const state = useStore<State>({ 
+    mainImage: props.mainImage, 
+    previousImage: props.mainImage,
+    images: [...props.images],
+    transitioning: false 
+  });
+
+  const handleImageClick = $((image: string) => {
+    if (state.mainImage !== image) {
+      state.transitioning = true;
+      state.previousImage = state.mainImage;
+      state.mainImage = image; // Update mainImage immediately
+      setTimeout(() => {
+        state.transitioning = false;
+      }, 500); // Match this duration with the CSS animation duration
+    }
+  });
+
   return (
     <div
-      onClick$={() => nav(`/persona/${props.id}`)}
-      class="box-border flex relative flex-col shrink-0 gap-4 p-4 h-auto rounded-lg border-t-4 border-l-4 border-solid border-[black] border-b-[12px] border-r-[12px] grow-0 max-w-[45%] max-sm:max-w-full cursor-pointer"
+      // onClick$={() => nav(`/persona/${props.id}`)}
+      class="box-border flex relative flex-col shrink-0 gap-4 p-4 h-auto rounded-lg border-t-4 border-l-4 border-solid border-[black] border-b-[12px] border-r-[12px] grow-0 min-w-[20svw] max-sm:max-w-full cursor-pointer"
     >
-      <div class="box-border flex relative flex-col shrink-0 h-auto rounded-lg border-t-4 border-l-4 border-solid border-[black] border-b-[12px] border-r-[12px]">
-        <img
-          loading="lazy"
-          src={props.mainImageUrl}
-          class="box-border object-cover overflow-hidden shrink-0 w-full border-solid aspect-[0.67] min-h-[20px] min-w-[20px]"
-        />
+      <div class="box-border flex relative flex-col shrink-0 rounded-lg border-t-4 border-l-4 border-solid bg-cover border-[black] border-b-[12px] border-r-[12px] overflow-hidden">
+        <div class="image-container">
+          <img
+            width="1024"
+            height="1024"
+            src={state.previousImage}
+            alt="Previous"
+            class={`${state.transitioning ? '' : 'hidden'}`} // Hide previous image when not transitioning
+          />
+          <img
+            width="1024"
+            height="1024"
+            src={state.mainImage}
+            alt="Main"
+            class={`${state.transitioning ? 'fade-up' : ''}`}
+          />
+        </div>
       </div>
       <div class="box-border flex relative flex-col shrink-0 pb-8 h-auto">
         <div class="box-border relative shrink-0 mt-5 h-auto text-3xl font-black text-slate-950">
@@ -43,70 +108,30 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
         <div class="box-border relative shrink-0 mt-4 h-auto text-xl font-extrabold">
           Demographics
         </div>
-        <div class="box-border flex relative flex-row shrink-0 gap-2">
-          <div class="box-border relative shrink-0 mt-0 h-auto font-bold">
-            Age:
-          </div>
-          <div class="box-border relative shrink-0 mt-0 h-auto">{props.age}</div>
-        </div>
-        <div class="box-border flex relative flex-row shrink-0 gap-2">
-          <div class="box-border relative shrink-0 mt-0 h-auto font-bold">
-            Gender:
-          </div>
-          <div class="box-border relative shrink-0 mt-0 h-auto">
-            {props.gender}
-          </div>
-        </div>
-        <div class="box-border flex relative flex-row shrink-0 gap-2">
-          <div class="box-border relative shrink-0 mt-0 h-auto font-bold">
-            Ethnicity:
-          </div>
-          <div class="box-border relative shrink-0 mt-0 h-auto">
-            {props.ethnicity}
-          </div>
-        </div>
+        <DemographicItem title="Age" value={props.age} />
+        <DemographicItem title="Gender" value={props.gender} />
+        <DemographicItem title="Ethnicity" value={props.ethnicity} />
         <div class="box-border relative shrink-0 mt-4 h-auto text-xl font-extrabold">
           Psychographics
         </div>
-        <div class="box-border flex relative flex-row shrink-0 gap-2">
-          <div class="box-border relative shrink-0 mt-0 h-auto font-bold">
-            Goals:
-          </div>
-          <div class="box-border relative shrink-0 mt-0 h-auto">
-            {props.goals}
-          </div>
-        </div>
-        <div class="box-border flex relative flex-row shrink-0 gap-2">
-          <div class="box-border relative shrink-0 mt-0 h-auto font-bold">
-            Needs:
-          </div>
-          <div class="box-border relative shrink-0 mt-0 h-auto">
-            {props.needs}
-          </div>
-        </div>
-        <div class="box-border flex relative flex-row shrink-0 gap-2">
-          <div class="box-border relative shrink-0 mt-0 h-auto font-bold">
-            Frustrations:
-          </div>
-          <div class="box-border relative shrink-0 mt-0 h-auto">
-            {props.frustrations}
-          </div>
-        </div>
+        <PsychographicItem title="Goals" value={props.goals} />
+        <PsychographicItem title="Needs" value={props.needs} />
+        <PsychographicItem title="Frustrations" value={props.frustrations} />
       </div>
-      <div class="box-border flex relative flex-row shrink-0 gap-1 justify-between items-center max-h-24">
-        {props.extraImageUrls.map((url, index) => (
-          <div
+      <div class="grid grid-cols-2 gap-4 mt-auto">
+        {props.images.map((image, index) => (
+          <img
             key={index}
-            class="box-border flex relative flex-col shrink-0 my-auto rounded-lg border-t-4 border-l-4 border-solid border-[black] border-b-[12px] border-r-[12px] min-w-[6rem] max-sm:min-w-[4.5rem]"
-          >
-            <img
-              loading="lazy"
-              src={url}
-              class="box-border object-cover overflow-hidden shrink-0 aspect-square size-full"
-            />
-          </div>
+            width="1024"
+            height="1024"
+            src={image}
+            alt={`Thumbnail ${index}`}
+            class="w-full h-20 object-cover rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 hover:border-b-[4px] hover:border-r-[4px] hover:bg-slate-300 cursor-pointer"
+            onClick$={$(() => handleImageClick(image))}
+          />
         ))}
       </div>
+      <PersonaDetails title="Persona Details" bio="This is a short bio about the persona." background="bg-gray-200" />
     </div>
   );
 });

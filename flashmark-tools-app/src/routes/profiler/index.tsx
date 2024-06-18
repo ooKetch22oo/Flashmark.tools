@@ -6,7 +6,7 @@ export default component$(() => {
   return (
     <div>
       Profiler route works.
-        <Btn href="/profiler/personas" label="Click me" />
+        <Btn href="/profiler/[business-personas]" label="Click me" />
     </div>
   );
 });

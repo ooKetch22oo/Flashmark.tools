@@ -1,7 +1,7 @@
 import { component$ } from '@builder.io/qwik';
 import { Persona } from '../../../../components/persona-container/persona-container2';
-import { DashHeader } from '~/components/header/header';
-import { routeLoader$, useLocation } from '@builder.io/qwik-city';
+// import { DashHeader } from '~/components/header/header';
+import { routeLoader$ } from '@builder.io/qwik-city';
 import { supabase } from '~/supabase';
 
 export const usePersonas = routeLoader$(async (requestEvent) => {
@@ -38,9 +38,8 @@ export default component$(() => {
   }
 
   return (
-    <div class="flex flex-col h-full gap-4 flex-1 my-auto px-4 max-h-[95svh] overflow-auto">
-      <DashHeader title="Flashmark.tools" showIconPrint={true} showIconHelp={true} />
-      <div class="flex flex-col h-full self-stretch w-full rounded-lg asym-borders overflow-hidden">
+
+      <div class="flex flex-col h-full self-stretch w-full rounded-lg overflow-hidden">
         <div>
           <Persona
             title={persona.title || 'No title'}
@@ -72,6 +71,5 @@ export default component$(() => {
           />
         </div>
       </div>
-    </div>
   );
 });

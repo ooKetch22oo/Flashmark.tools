@@ -14,13 +14,22 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
   });
 };
 
+
 export default component$(() => {
+
+
+
   return (
   <main>
     <div class= 'flex min-h-screen bg-green-400'>
       <NavSidebar />
-      <div class="flex flex-col self-stretch w-full rounded-lg overflow-hidden">
-      <Slot />
+      <div class="flex flex-col stretch h-full gap-4 flex-1 my-auto px-4 max-h-[95svh] overflow-auto">
+      <DashHeader title="Flashmark.tools" showIconPrint={true} showIconHelp={true} />
+      <div class="flex flex-col h-full self-stretch w-full rounded-lg asym-borders overflow-hidden">
+        <div>
+          <Slot />
+        </div>
+      </div>
       </div>
     </div>
   </main>
