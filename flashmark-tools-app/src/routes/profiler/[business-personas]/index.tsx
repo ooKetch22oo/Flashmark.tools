@@ -44,12 +44,12 @@ export default component$(() => {
   // }
 
 return (
-  <div class='flex flex-col gap-4 px-4 pt-2 pb-5'>
+  <div class='flex flex-col grow gap-4 px-4 pt-2 overflow-'>
     <h1 class="my-auto text-3xl font-semibold leading-10 text-slate-950">{business}</h1>
-    <div class="flex flex-r h-full gap-4 self-stretch items-stretch w-full rounded-lg overflow-hidden">
+    <div class="flex flex-row pb-4 gap-4 grow row w-full rounded-lg overflow-hidden">
     {Array.isArray(personas.value) ? personas.value.map((persona: any) => (
 
-          <Link key={persona.id} href={`/profiler/${business}/${persona.id}`}>
+          <Link class="flex" key={persona.id} href={`/profiler/${business}/${persona.id}`}>
             <PersonaCard 
             id={persona.id} 
             name={persona.name} 

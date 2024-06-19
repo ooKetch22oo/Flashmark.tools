@@ -34,7 +34,7 @@ export const PersonaTitleCard = component$((props: Props) => {
   });
 
   return (
-    <div class="flex flex-col gap-4 justify-normal self-stretch p-4 w-3/12 rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 overflow-hidden">
+    <div class="flex flex-col gap-4 justify-normal self-stretch p-4 w-3/12 min-h-[70svh] rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 overflow-hidden">
       <div class="box-border flex relative flex-col shrink-0 h-2/5 rounded-lg border-t-4 border-l-4 border-solid bg-cover border-[black] border-b-[12px] border-r-[12px] overflow-hidden">
         <div class="image-container">
           <img

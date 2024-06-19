@@ -29,14 +29,14 @@ interface PropsType {
 }
 
 const DemographicItem = component$(({ title, value }: PropsType) => (
-  <div class="flex gap-2.5 mt-2 max-md:flex-wrap">
+  <div class="flex gap-2.5 mt-1 max-md:flex-wrap">
     <div class="font-semibold text-base">{title}:</div>
     <div class="flex-1 max-md:max-w-full text-base">{value}</div>
   </div>
 ));
 
 const PsychographicItem = component$(({ title, value }: PropsType) => (
-  <div class="flex flex-col gap-2.5 mt-2 max-md:flex-wrap">
+  <div class="flex flex-col gap-2.5 mt-1 max-md:flex-wrap">
     <div class="font-semibold text-base">{title}:</div>
     <div class="flex-1 max-md:max-w-full text-base">{value}</div>
   </div>
@@ -75,10 +75,9 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
   return (
     <div
       // onClick$={() => nav(`/persona/${props.id}`)}
-      class="box-border flex relative flex-col shrink-0 gap-4 p-4 h-auto rounded-lg border-t-4 border-l-4 border-solid border-[black] border-b-[12px] border-r-[12px] grow-0 min-w-[20svw] max-sm:max-w-full cursor-pointer"
-    >
-      <div class="box-border flex relative flex-col shrink-0 rounded-lg border-t-4 border-l-4 border-solid bg-cover border-[black] border-b-[12px] border-r-[12px] overflow-hidden">
-        <div class="image-container">
+      class="box-border flex relative flex-col h-auto gap-4 p-4 rounded-lg border-t-4 border-l-4 border-solid border-[black] border-b-[12px] border-r-[12px] flex-grow min-w-[20svw] max-sm:max-w-full cursor-pointer">
+      <div class=" box-border flex relative flex-col h-56 rounded-lg border-t-4 border-l-4 border-solid bg-cover border-[black] border-b-[12px] border-r-[12px] overflow-hidden">
+          <div class="image-container">
           <img
             width="1024"
             height="1024"
@@ -93,10 +92,10 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
             alt="Main"
             class={`${state.transitioning ? 'fade-up' : ''}`}
           />
-        </div>
+          </div>
       </div>
-      <div class="box-border flex relative flex-col shrink-0 pb-8 h-auto">
-        <div class="box-border relative shrink-0 mt-5 h-auto text-3xl font-black text-slate-950">
+      <div class="box-border flex relative flex-col shrink-0 pb-8 h-auto max-h-72 overflow-auto">
+        <div class="box-border relative shrink-0 mt-2 h-auto text-3xl font-black text-slate-950">
           {props.name}
         </div>
         <div class="box-border relative shrink-0 h-auto font-bold text-slate-950">
@@ -105,20 +104,20 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
         <div class="box-border relative shrink-0 h-auto font-medium text-slate-950">
           {props.quote}
         </div>
-        <div class="box-border relative shrink-0 mt-4 h-auto text-xl font-extrabold">
+        <div class="box-border relative shrink-0 mt-2 h-auto text-xl font-extrabold">
           Demographics
         </div>
         <DemographicItem title="Age" value={props.age} />
         <DemographicItem title="Gender" value={props.gender} />
         <DemographicItem title="Ethnicity" value={props.ethnicity} />
-        <div class="box-border relative shrink-0 mt-4 h-auto text-xl font-extrabold">
+        <div class="box-border relative shrink-0 mt-2 h-auto text-xl font-extrabold">
           Psychographics
         </div>
         <PsychographicItem title="Goals" value={props.goals} />
         <PsychographicItem title="Needs" value={props.needs} />
         <PsychographicItem title="Frustrations" value={props.frustrations} />
       </div>
-      <div class="grid grid-cols-2 gap-4 mt-auto">
+      <div class="grid grid-cols-4 gap-4 mt-auto">
         {props.images.map((image, index) => (
           <img
             key={index}
@@ -126,12 +125,11 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
             height="1024"
             src={image}
             alt={`Thumbnail ${index}`}
-            class="w-full h-20 object-cover rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 hover:border-b-[4px] hover:border-r-[4px] hover:bg-slate-300 cursor-pointer"
+            class="w-full h-auto object-cover rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 hover:border-b-[4px] hover:border-r-[4px] hover:bg-slate-300 cursor-pointer"
             onClick$={$(() => handleImageClick(image))}
           />
         ))}
       </div>
-      <PersonaDetails title="Persona Details" bio="This is a short bio about the persona." background="bg-gray-200" />
     </div>
   );
 });

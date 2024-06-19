@@ -69,7 +69,7 @@ export const Persona = component$(( props: PersonaContainerProps ) => {
           {`${props.business ? `${props.business}:` : ''} Persona Profile - ${props.name }` || 'Loading...'}
         </h1>
       </header>
-      <section class="flex flex-col gap-4 justify-between px-4 pb-4 w-full max-md:max-w-full overflow-y-auto overflow-x-hidden h-[70.15svh]">
+      <section class="flex flex-col gap-4 pb-4 justify-between px-4 w-full max-md:max-w-full overflow-y-auto overflow-x-hidden max-h-[72svh]">
         <aside class="box-border flex relative pt-4 flex-row grow gap-4 h-auto w-auto">
           {props && (
             <>

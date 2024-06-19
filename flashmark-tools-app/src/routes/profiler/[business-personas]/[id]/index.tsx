@@ -39,8 +39,7 @@ export default component$(() => {
 
   return (
 
-      <div class="flex flex-col h-full self-stretch w-full rounded-lg overflow-hidden">
-        <div>
+      <div class="flex flex-col h-100% grow w-full rounded-lg overflow-hidden">
           <Persona
             title={persona.title || 'No title'}
             bio={persona.bio || 'No bio'}
@@ -69,7 +68,6 @@ export default component$(() => {
             ditl={persona.ditl || 'No day in the life'}
             additional_insights={persona.additional_notes || 'No additional insights'}
           />
-        </div>
       </div>
   );
 });
