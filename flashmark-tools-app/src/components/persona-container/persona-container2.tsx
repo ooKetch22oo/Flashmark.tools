@@ -66,7 +66,7 @@ export const Persona = component$(( props: PersonaContainerProps ) => {
     <div>
       <header class="flex gap-5 justify-between py-4 pr-5 pl-4 w-full border-b-4 border-black border-solid max-md:flex-wrap max-md:max-w-full ">
         <h1 class="my-auto text-3xl font-semibold leading-10 text-slate-950">
-          {`${props.business ? `${props.business}:` : ''} Persona Profile - ${props.name }` || 'Loading...'}
+          {`${props.business ? `${props.business.replace(/- /g, '')}:` : ''} Persona Profile - ${props.name }` || 'Loading...'}
         </h1>
       </header>
       <section class="flex flex-col gap-4 pb-4 justify-between px-4 w-full max-md:max-w-full overflow-y-auto overflow-x-hidden max-h-[72svh]">

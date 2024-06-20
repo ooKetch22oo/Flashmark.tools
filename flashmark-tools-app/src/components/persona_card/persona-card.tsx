@@ -1,5 +1,5 @@
 import { $, component$, useStore } from '@builder.io/qwik';
-import { useNavigate } from '@builder.io/qwik-city';
+import { Link, useNavigate } from '@builder.io/qwik-city';
 
 interface PersonaCardProps {
   name: string;
@@ -14,6 +14,7 @@ interface PersonaCardProps {
   mainImage: string;
   images: string[];
   id: string;
+  business: string;
 }
 
 interface State {
@@ -53,7 +54,8 @@ const PersonaDetails = component$(({ title, bio, background }: { title: string; 
 
 export const PersonaCard = component$((props: PersonaCardProps) => {
   const nav = useNavigate();
-
+  const business = props.business;
+  const id = props.id;
   const state = useStore<State>({ 
     mainImage: props.mainImage, 
     previousImage: props.mainImage,
@@ -75,7 +77,7 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
   return (
     <div
       // onClick$={() => nav(`/persona/${props.id}`)}
-      class="box-border flex relative flex-col h-auto gap-4 p-4 rounded-lg border-t-4 border-l-4 border-solid border-[black] border-b-[12px] border-r-[12px] flex-grow min-w-[20svw] max-sm:max-w-full cursor-pointer">
+      class="box-border flex relative flex-col h-auto gap-4 p-4 rounded-lg border-t-4 border-l-4 border-solid border-[black] border-b-[12px] border-r-[12px] flex-grow min-w-[20svw] max-sm:max-w-full">
       <div class=" box-border flex relative flex-col h-56 rounded-lg border-t-4 border-l-4 border-solid bg-cover border-[black] border-b-[12px] border-r-[12px] overflow-hidden">
           <div class="image-container">
           <img
@@ -94,10 +96,15 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
           />
           </div>
       </div>
-      <div class="box-border flex relative flex-col shrink-0 pb-8 h-auto max-h-72 overflow-auto">
-        <div class="box-border relative shrink-0 mt-2 h-auto text-3xl font-black text-slate-950">
+      <div class="flex flex-row justify-between ">
+        <div class="box-border relative shrink-0 mt-1 h-auto text-3xl font-black text-slate-950">
           {props.name}
         </div>
+      <Link href={`/profiler/${business}/${id}`} class="box-border items-center px-4 py-1 font-black flex bg-[var(--swatch--brand)] asym-borders cursor-pointer">
+          View Persona
+      </Link>
+      </div>
+      <div class="box-border flex relative flex-col shrink pb-8 h-auto max-h-52 overflow-auto">
         <div class="box-border relative shrink-0 h-auto font-bold text-slate-950">
           {props.title}
         </div>
