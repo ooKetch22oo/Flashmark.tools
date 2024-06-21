@@ -97,14 +97,14 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
           </div>
       </div>
       <div class="flex flex-row justify-between ">
-        <div class="box-border relative shrink-0 mt-1 h-auto text-3xl font-black text-slate-950">
+        <div class="box-border  relative shrink-0 mt-1 h-auto text-2xl font-black w-1/2 text-slate-950">
           {props.name}
         </div>
       <Link href={`/profiler/${business}/${id}`} class="box-border items-center px-4 py-1 font-black flex bg-[var(--swatch--brand)] asym-borders cursor-pointer">
           View Persona
       </Link>
       </div>
-      <div class="box-border flex relative flex-col shrink pb-8 h-auto max-h-52 overflow-auto">
+      <div class="box-border flex relative flex-col shrink pb-8 h-auto max-h-48 overflow-auto">
         <div class="box-border relative shrink-0 h-auto font-bold text-slate-950">
           {props.title}
         </div>
