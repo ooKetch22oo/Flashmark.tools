@@ -14,23 +14,29 @@ const userId = '37706f5f-2c6c-438c-bc63-dafc2ba0c22d'; // Replace with actual us
 
 
 export const useDisplayBusinesses = routeLoader$(async (requestEvent) => {
-// console log success message
-console.log('useDisplayBusinessess success');
+  console.log('useDisplayBusinesses success');
 
+  const { data, error } = await supabase
+    .from('profiler_personas')
+    .select('id, business, business_website, business_summary')
+    .eq('user_id', userId);
 
+  if (error) {
+    return requestEvent.fail(500, { error: error.message });
+  }
 
-const { data, error } = await supabase
-  .from('profiler_personas')
-  .select('id, business, business_website, business_summary')
-  .eq('user_id', userId)
+  // Process the data to get unique businesses
+  const uniqueBusinesses = data.reduce((acc: any[], current: any) => {
+    const x = acc.find((item: any) => item.business === current.business);
+    if (!x) {
+      return acc.concat([current]);
+    } else {
+      return acc;
+    }
+  }, []);
 
-
-
-if (error) {
-  return requestEvent.fail(500, { error: error.message });
-}
-console.log('data:', data);
-return data;
+  console.log('uniqueBusinesses:', uniqueBusinesses);
+  return uniqueBusinesses;
 });
 
 export default component$(() => {
