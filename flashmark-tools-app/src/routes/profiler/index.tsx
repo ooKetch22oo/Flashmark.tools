@@ -42,7 +42,7 @@ return (
     <header class="flex gap-5 justify-between py-4 pr-5 pl-4 w-full border-b-4 border-black border-solid max-md:flex-wrap max-md:max-w-full ">
     <h1 class="my-auto text-3xl font-semibold leading-10 text-slate-950">.profiler</h1>
     </header>
-    <div class="flex flex-wrap pb-8 px-4 gap-4 grow row w-full rounded-lg overflow-auto max-h-[72svh]">
+    <div class="flex flex-col pb-8 px-4 gap-4 grow row w-full rounded-lg overflow-auto max-h-[72svh]">
     {Array.isArray(businesses.value) ? businesses.value.map((businesses: any) => (
 
           // <Link class="flex" key={businesses.id} href={`/profiler/${business}/${businesses.id}`}>
