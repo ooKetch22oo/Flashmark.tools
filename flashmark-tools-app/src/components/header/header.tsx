@@ -17,7 +17,7 @@ export const DashHeader = component$<DashHeaderProps>((props) => {
 
   return (
     <section class="flex gap-5 justify-between self-stretch pt-4 pr-5 pl-8 rounded-lg border-t-4 border-l-4 border-solid bg-zinc-100 border-b-[12px] border-r-[12px] border-slate-950">
-      <h1 class="logo font-bold text-slate-950 max-md:max-w-full cursor-pointer">{props.title}</h1>
+      <h1 class="logo font-bold text-slate-950 max-md:max-w-full">{props.title}</h1>
       <div class="flex gap-4 justify-between self-start pt-2 px-4 mt-1">
         {props.showIconPrint && (
           <div
