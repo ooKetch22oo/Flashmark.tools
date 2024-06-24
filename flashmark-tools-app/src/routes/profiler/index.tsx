@@ -16,41 +16,27 @@ const userId = '37706f5f-2c6c-438c-bc63-dafc2ba0c22d'; // Replace with actual us
 export const useDisplayBusinesses = routeLoader$(async (requestEvent) => {
   console.log('useDisplayBusinesses success');
 
-  // First, get all unique businesses for the user
-  const { data: uniqueBusinesses, error: uniqueError } = await supabase
+  const { data, error } = await supabase
     .from('profiler_personas')
-    .select('business')
-    .eq('user_id', userId)
-    .distinct();
+    .select('id, business, business_website, business_summary')
+    .eq('user_id', userId);
 
-  if (uniqueError) {
-    return requestEvent.fail(500, { error: uniqueError.message });
+  if (error) {
+    return requestEvent.fail(500, { error: error.message });
   }
 
-  // Now, fetch the latest data for each unique business
-  const businessPromises = uniqueBusinesses.map(async (item) => {
-    const { data, error } = await supabase
-      .from('profiler_personas')
-      .select('id, business, business_website, business_summary')
-      .eq('user_id', userId)
-      .eq('business', item.business)
-      .order('created_at', { ascending: false })
-      .limit(1)
-      .single();
-
-    if (error) {
-      console.error(`Error fetching data for business ${item.business}:`, error);
-      return null;
+  // Process the data to get unique businesses
+  const uniqueBusinesses = data.reduce((acc: any[], current: any) => {
+    const x = acc.find((item: any) => item.business === current.business);
+    if (!x) {
+      return acc.concat([current]);
+    } else {
+      return acc;
     }
+  }, []);
 
-    return data;
-  });
-
-  const businessesData = await Promise.all(businessPromises);
-  const validBusinesses = businessesData.filter((business): business is NonNullable<typeof business> => business !== null);
-
-  console.log('uniqueBusinesses:', validBusinesses);
-  return validBusinesses;
+  console.log('uniqueBusinesses:', uniqueBusinesses);
+  return uniqueBusinesses;
 });
 
 export default component$(() => {
@@ -68,8 +54,8 @@ return (
         <BusinessCard
           key={business.id}
           business={business.business}
-          business_website={business.business_website}
-          business_summary={business.business_summary}
+          website={business.business_website}
+          summary={business.business_summary}
         />
         // </Link>
       )) : <div>No businesses found.</div>}
