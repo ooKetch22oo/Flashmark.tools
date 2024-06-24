@@ -68,8 +68,8 @@ return (
         <BusinessCard
           key={business.id}
           business={business.business}
-          website={business.business_website}
-          summary={business.business_summary}
+          business_website={business.business_website}
+          business_summary={business.business_summary}
         />
         // </Link>
       )) : <div>No businesses found.</div>}
