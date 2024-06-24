@@ -20,8 +20,7 @@ export const useDisplayBusinesses = routeLoader$(async (requestEvent) => {
     .from('profiler_personas')
     .select('id, business, business_website, business_summary')
     .eq('user_id', userId)
-    .order('created_at', { ascending: false })
-    .limit(10);
+    .limit(40) // Limit to 10 businesses for now;
 
   if (error) {
     return requestEvent.fail(500, { error: error.message });
