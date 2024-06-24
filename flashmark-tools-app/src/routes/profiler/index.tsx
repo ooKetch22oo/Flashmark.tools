@@ -1,4 +1,4 @@
-import { component$, useSignal } from '@builder.io/qwik';
+import { component$, useSignal, useComputed$ } from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import { BusinessCard } from '~/components/business-card/business-card';
 import { supabase } from '~/supabase';
@@ -42,15 +42,29 @@ export const useDisplayBusinesses = routeLoader$(async (requestEvent) => {
 export default component$(() => {
   const businesses = useDisplayBusinesses();
   const displayCount = useSignal(5);
+  const searchTerm = useSignal('');
+
+  const filteredBusinesses = useComputed$(() => {
+    return businesses.value?.filter(business =>
+      business.business.toLowerCase().includes(searchTerm.value.toLowerCase())
+    ) ?? ['No businesses found.'];
+  });
 
   return (
     <div class='flex flex-col grow overflow-auto'>
       <header class="flex gap-5 justify-between py-4 pr-5 pl-4 w-full border-b-4 border-black border-solid max-md:flex-wrap max-md:max-w-full">
         <h1 class="my-auto text-3xl font-semibold leading-10 text-slate-950">.profiler</h1>
+        <input
+          type="text"
+          placeholder="Search businesses..."
+          value={searchTerm.value}
+          onInput$={(ev) => searchTerm.value = (ev.target as HTMLInputElement).value}
+          class="px-4 py-2 box-border flex flex-col shrink-0 rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
       </header>
       <div class="flex flex-col pt-4 pb-8 px-4 gap-4 grow row w-full rounded-lg overflow-auto max-h-[72svh]">
-        {Array.isArray(businesses.value) ? 
-          businesses.value.slice(0, displayCount.value).map((business: any) => (
+        {filteredBusinesses.value.length > 0 ? 
+          filteredBusinesses.value.slice(0, displayCount.value).map((business: any) => (
             // <Link class="flex" key={business.id} href={`/profiler/${business.business}/${business.id}`}>
             <BusinessCard
               key={business.id}
@@ -61,7 +75,7 @@ export default component$(() => {
             // </Link>
           )) 
         : <div>No businesses found.</div>}
-        {businesses.value && (businesses.value.length ?? 0) > displayCount.value && (
+        {filteredBusinesses.value.length > displayCount.value && (
           <button
             class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
             onClick$={() => displayCount.value += 5}
