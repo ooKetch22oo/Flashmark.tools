@@ -19,8 +19,7 @@ export const useDisplayBusinesses = routeLoader$(async (requestEvent) => {
   const { data, error } = await supabase
     .from('profiler_personas')
     .select('id, business, business_website, business_summary')
-    .eq('user_id', userId)
-    .limit(40) // Limit to 10 businesses for now;
+    .eq('user_id', userId);
 
   if (error) {
     return requestEvent.fail(500, { error: error.message });
