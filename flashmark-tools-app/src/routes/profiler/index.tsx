@@ -1,4 +1,4 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useSignal } from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import { BusinessCard } from '~/components/business-card/business-card';
 import { supabase } from '~/supabase';
