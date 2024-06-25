@@ -1,66 +1,36 @@
 import { component$, useSignal } from '@builder.io/qwik';
 import { supabase } from '~/supabase';
-
+import { WelcomeSection } from '~/components/welcome-section/welcome-section';
+import { UserStatsSection } from '~/components/user-stats-section/user-stats-section';
+import { RecentProjectsSection } from '~/components/recent-projects-section/recent-projects-section';
 
 export default component$(() => {
   const welcomeMessage = useSignal('Welcome to your Flashmark Tools Dashboard!');
   const userStats = useSignal({
     toolsUsed: 5,
-    projectsCompleted: 10,
-    totalHoursSaved: 25
+    personasCreated: 10,
+    totalHoursSaved: 25,
+    remainingTokens: 100,
   });
   const recentProjects = useSignal([
-    { name: 'Project A', date: '2023-06-01', status: 'Completed' },
-    { name: 'Project B', date: '2023-06-15', status: 'In Progress' },
-    { name: 'Project C', date: '2023-06-30', status: 'Planned' },
+    { name: 'Business A', date: '2023-06-01', personas: 4 },
+    { name: 'Business B', date: '2023-06-15', personas: 8 },
+    { name: 'Business C', date: '2023-06-30', personas: 12 },
   ]);
 
   return (
-    <div class="p-4">
-      <h1 class="text-2xl font-bold mb-6">Dashboard</h1>
-      <div class="flex mb-6">
-        {/* Welcome/News Section */}
-        <div class="w-1/2 pr-2">
-          <div class="bg-white p-4 rounded shadow">
-            <h2 class="text-xl font-semibold mb-2">Updates</h2>
-            <p>{welcomeMessage.value}</p>
-          </div>
+    <div class="flex flex-col h-full">
+      <h1 class="flex gap-5 justify-between py-4 pr-5 pl-4 w-full border-b-4 border-black border-solid max-md:flex-wrap max-md:max-w-full ">Dashboard</h1>
+      <div class="grid grid-cols-2 h-full gap-4 p-4">
+        <div class="w-full h-full">
+          <WelcomeSection welcomeMessage={welcomeMessage} />
         </div>
-        {/* User Stats Section */}
-        <div class="w-1/2 pl-2">
-          <div class="bg-white p-4 rounded shadow">
-            <h2 class="text-xl font-semibold mb-2">Your Statistics</h2>
-            <ul>
-              <li>Tools Used: {userStats.value.toolsUsed}</li>
-              <li>Projects Completed: {userStats.value.projectsCompleted}</li>
-              <li>Total Hours Saved: {userStats.value.totalHoursSaved}</li>
-            </ul>
-          </div>
+        <div class="w-full h-full">
+          <UserStatsSection userStats={userStats} />
         </div>
+      <div class="w-full h-full col-span-2 flex-grow">
+        <RecentProjectsSection recentProjects={recentProjects} />
       </div>
-      {/* Recent Projects Section */}
-      <div class="w-full">
-        <div class="bg-white p-4 rounded shadow">
-          <h2 class="text-xl font-semibold mb-2">Recent Projects</h2>
-          <table class="w-full">
-            <thead>
-              <tr>
-                <th class="text-left">Name</th>
-                <th class="text-left">Date</th>
-                <th class="text-left">Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {recentProjects.value.map((project, index) => (
-                <tr key={index}>
-                  <td>{project.name}</td>
-                  <td>{project.date}</td>
-                  <td>{project.status}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
       </div>
     </div>
   );

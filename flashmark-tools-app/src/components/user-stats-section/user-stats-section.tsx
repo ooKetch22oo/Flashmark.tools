@@ -2,26 +2,34 @@ import { component$, Signal } from '@builder.io/qwik';
 
 interface UserStats {
   toolsUsed: number;
-  projectsCompleted: number;
+  personasCreated: number;
   totalHoursSaved: number;
+  remainingTokens: number;
 }
 
 interface UserStatsSectionProps {
   userStats: Signal<UserStats>;
 }
 
+const UserStat = component$<{ label: string; value: number }>(({ label, value }) => {
+  return (
+    <div>
+      <dt>{label}:</dt>
+      <dd>{value}</dd>
+    </div>
+  );
+} );
+
 export const UserStatsSection = component$<UserStatsSectionProps>(({ userStats }) => {
   return (
-    <div class="bg-white p-4 rounded shadow">
+    <div class="box-border flex relative flex-col h-full gap-4 p-4 rounded-lg border-t-4 border-l-4 border-solid border-[black] border-b-[12px] border-r-[12px] flex-grow max-sm:max-w-full">
       <h2 class="text-xl font-semibold mb-2">Your Statistics</h2>
-      <dl>
-        <dt>Tools Used:</dt>
-        <dd>{userStats.value.toolsUsed}</dd>
-        <dt>Projects Completed:</dt>
-        <dd>{userStats.value.projectsCompleted}</dd>
-        <dt>Total Hours Saved:</dt>
-        <dd>{userStats.value.totalHoursSaved}</dd>
-      </dl>
+      <div class="grid grid-cols-3 gap-4">
+        <UserStat label="Tools Used" value={userStats.value.toolsUsed} />
+        <UserStat label="Personas Created" value={userStats.value.personasCreated} />
+        <UserStat label="Total Hours Saved" value={userStats.value.totalHoursSaved} />
+        <UserStat label="Remaining Tokens" value={userStats.value.remainingTokens} />
+      </div>
     </div>
   );
 });

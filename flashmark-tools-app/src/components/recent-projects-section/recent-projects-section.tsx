@@ -14,9 +14,6 @@ interface RecentProjectsSectionProps {
 export const RecentProjectsSection = component$<RecentProjectsSectionProps>(({ recentProjects }) => {
   const nav = useNavigate();
 
-  const handleRowClick = $(() => {
-    nav('/profiler');
-  });
 
   return (
     <div class="box-border flex relative flex-col h-full gap-4 p-4 rounded-lg border-t-4 border-l-4 border-solid border-slate-950 border-b-[12px] border-r-[12px] flex-grow min-w-[20svw] max-sm:max-w-full">
@@ -31,17 +28,23 @@ export const RecentProjectsSection = component$<RecentProjectsSectionProps>(({ r
           </tr>
         </thead>
         <tbody>
-          {recentProjects.value.map((project, index) => (
-              <tr 
-                key={index}
-                onClick$={handleRowClick}
-                class={index % 2 === 0 ? 'bg-zinc-100 hover:bg-cyan-600 cursor-pointer' : 'bg-zinc-300 hover:bg-cyan-600 cursor-pointer'}
-              >
-                <td class="p-2 text-left">{project.name}</td>
-                <td class="text-left">{project.personas}</td>
-                <td class="p-2 text-right">{project.date}</td>
-              </tr>
-          ))}
+          {recentProjects.value.map((project, index) => {
+              const handleRowClick = $(() => {
+                  nav(`/profiler/${recentProjects.value[index].name}`);
+              });
+          
+              return (
+                  <tr 
+                      key={index}
+                      onClick$={handleRowClick}
+                      class={index % 2 === 0 ? 'bg-zinc-100 hover:bg-cyan-600 cursor-pointer' : 'bg-zinc-300 hover:bg-cyan-600 cursor-pointer'}
+                  >
+                      <td class="p-2 text-left">{project.name}</td>
+                      <td class="text-left">{project.personas}</td>
+                      <td class="p-2 text-right">{project.date}</td>
+                  </tr>
+              );
+          })}
         </tbody>
       </table>
       </div>

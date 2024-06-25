@@ -16,7 +16,7 @@ export default component$(() => {
 
   return (
     <nav class="flex flex-col my-auto ml-4 px-4 pt-4 pb-5 rounded-lg border-t-4 border-l-4 border-solid bg-zinc-100 border-b-[12px] border-r-[12px] border-slate-950 h-[95svh] min-w-[15rem]">
-      <Link href="/" class="flex justify-center">
+      <Link href="/dashboard" class="flex justify-center">
       <Logo />
       </Link>
       <div class="flex flex-col mt-4">
