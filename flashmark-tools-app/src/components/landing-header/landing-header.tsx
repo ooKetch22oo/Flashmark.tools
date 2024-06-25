@@ -1,5 +1,5 @@
 import { component$ } from '@builder.io/qwik';
-import { Link } from '@builder.io/qwik-city';
+import { Link, useLocation } from '@builder.io/qwik-city';
 import { Icon } from '../logo/logo';
 
 export interface HeaderProps {
@@ -7,9 +7,11 @@ export interface HeaderProps {
 }
 
 export const Header = component$((props: HeaderProps) => {
-  
+  const location = useLocation();
+  const isRootPath = location.url.pathname === '/';
+
   return (
-    <header class=" text-black p-4 flex items-center justify-between">
+    <header class="text-black p-4 flex items-center justify-between">
       <div class="flex items-center">
         <Icon
           width="50"
@@ -24,7 +26,7 @@ export const Header = component$((props: HeaderProps) => {
         />
         <span class="logo text-4xl font-bold ml-4">{props.name}</span>
       </div>
-      <nav>
+      <nav class={isRootPath ? '' : 'hidden'}>
         <Link href="#intro" class="mx-2">Intro</Link>
         <Link href="#features" class="mx-2">Features</Link>
         <Link href="#pricing" class="mx-2">Pricing</Link>
