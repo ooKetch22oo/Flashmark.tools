@@ -11,6 +11,11 @@ export default component$(() => {
         <a href="/sign-up" class="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700">Get Started for Free</a>
       </section>
 
+      <section id="what-is" class="mb-12">
+        <h2 class="text-3xl font-bold mb-6">What is Flashmark.profiler?</h2>
+        {/* Add description here */}
+      </section>
+
       <section id="features" class="mb-12">
         <h2 class="text-3xl font-bold mb-6">Why Choose Flashmark.profiler?</h2>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -45,7 +50,7 @@ export default component$(() => {
       </section>
 
       <section id="pricing" class="mb-12">
-        <h2 class="text-3xl font-bold mb-6">Pricing</h2>
+        <h2 class="text-3xl font-bold mb-6">Pricing Options</h2>
         <p class="mb-4">Get started for free. Then Pay as you go!</p>
         {/* Add pricing options here */}
       </section>
@@ -56,7 +61,16 @@ export default component$(() => {
         <p class="font-semibold">- Neil Ketcham</p>
       </section>
 
-      <SignUpForm />
+      <section id="newsletter" class="mb-12">
+        <h2 class="text-3xl font-bold mb-6">Keep up to Date</h2>
+        <p class="mb-4">Get our Newsletter for Branding insights and tactics you can implement yourself</p>
+        <SignUpForm />
+      </section>
+
+      <section id="faq" class="mb-12">
+        <h2 class="text-3xl font-bold mb-6">F.A.Q.</h2>
+        {/* Add FAQ content here */}
+      </section>
     </div>
   );
 });
