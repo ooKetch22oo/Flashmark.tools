@@ -1,17 +1,11 @@
 import { component$ } from '@builder.io/qwik';
+import { Logo } from '../logo/logo';
 
-export interface HeaderProps {
-  header: string;
-  subheader: string;
-}
-
-export const Header = component$((props: HeaderProps) => {
-  const { header, subheader } = props;
-
+export const Header = component$(() => {
   return (
-    <header class="bg-blue-600 text-white p-6">
-      <h1 class="text-4xl font-bold">{header}</h1>
-      <h2 class="text-xl mt-2">{subheader}</h2>
+    <header class="bg-blue-600 text-white p-6 flex items-center">
+      <Logo />
+      <span class="text-3xl font-bold ml-4">flashmark.tools</span>
     </header>
   );
 });
