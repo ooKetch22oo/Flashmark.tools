@@ -3,17 +3,16 @@ import { routeLoader$ } from '@builder.io/qwik-city';
 import { BusinessCard } from '~/components/business-card/business-card';
 import { supabase } from '~/supabase';
 
-// businesses: {
-//   business: string;
-//   website: string;
-//   summary: string;
-// }[];
-
+interface Business {
+  id: string;
+  business: string;
+  business_website: string;
+  business_summary: string;
+}
 
 const userId = '37706f5f-2c6c-438c-bc63-dafc2ba0c22d'; // Replace with actual user ID logic
 
-
-export const useDisplayBusinesses = routeLoader$(async (requestEvent) => {
+export const useDisplayBusinesses = routeLoader$(async ({ fail }) => {
   console.log('useDisplayBusinesses success');
 
   const { data, error } = await supabase
@@ -22,12 +21,12 @@ export const useDisplayBusinesses = routeLoader$(async (requestEvent) => {
     .eq('user_id', userId);
 
   if (error) {
-    return requestEvent.fail(500, { error: error.message });
+    return fail(500, { error: error.message });
   }
 
   // Process the data to get unique businesses
-  const uniqueBusinesses = data.reduce((acc: any[], current: any) => {
-    const x = acc.find((item: any) => item.business === current.business);
+  const uniqueBusinesses = data.reduce((acc: Business[], current: Business) => {
+    const x = acc.find((item) => item.business === current.business);
     if (!x) {
       return acc.concat([current]);
     } else {
@@ -41,13 +40,13 @@ export const useDisplayBusinesses = routeLoader$(async (requestEvent) => {
 
 export default component$(() => {
   const businesses = useDisplayBusinesses();
-  const displayCount = useSignal(5);
+  const displayCount = useSignal(6);
   const searchTerm = useSignal('');
 
   const filteredBusinesses = useComputed$(() => {
-    return businesses.value?.filter(business =>
+    return (businesses.value as Business[] | undefined)?.filter((business) =>
       business.business.toLowerCase().includes(searchTerm.value.toLowerCase())
-    ) ?? ['No businesses found.'];
+    ) ?? [];
   });
 
   return (
@@ -59,26 +58,27 @@ export default component$(() => {
           placeholder="Search businesses..."
           value={searchTerm.value}
           onInput$={(ev) => searchTerm.value = (ev.target as HTMLInputElement).value}
-          class="px-4 py-2 box-border flex flex-col shrink-0 rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          class="px-4 py-2 box-border flex flex-col shrink-0 rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] bg-zinc-100 border-slate-950 focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
       </header>
-      <div class="flex flex-col pt-4 pb-8 px-4 gap-4 grow row w-full rounded-lg overflow-auto max-h-[72svh]">
-        {filteredBusinesses.value.length > 0 ? 
-          filteredBusinesses.value.slice(0, displayCount.value).map((business: any) => (
-            // <Link class="flex" key={business.id} href={`/profiler/${business.business}/${business.id}`}>
-            <BusinessCard
-              key={business.id}
-              business={business.business}
-              website={business.business_website}
-              summary={business.business_summary}
-            />
-            // </Link>
-          )) 
-        : <div>No businesses found.</div>}
+      <div class="flex flex-wrap justify-around pt-4 pb-8 px-4 gap-4 grow row w-full rounded-lg overflow-auto max-h-[72svh]">
+                {businesses.value 
+            ? (filteredBusinesses.value.length > 0 
+              ? filteredBusinesses.value.slice(0, displayCount.value).map((business: Business) => (
+                  <BusinessCard
+                    key={business.id}
+                    business={business.business}
+                    website={business.business_website}
+                    summary={business.business_summary}
+                  />
+                )) 
+              : <div>No businesses found.</div>)
+            : <div>Loading...</div>
+          }
         {filteredBusinesses.value.length > displayCount.value && (
           <button
-            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-            onClick$={() => displayCount.value += 5}
+          class="flex justify-center items-center h-16 px-8 py-3 mt-4 text-xl font-semibold leading-8 whitespace-nowrap rounded-lg border-t-4 border-l-4 border-solid  border-b-[12px] border-r-[12px] border-slate-950 bg-blue-500 hover:border-b-4 hover:border-r-4 hover:bg-blue-700 text-white "
+          onClick$={() => displayCount.value += 6}
           >
             Load More
           </button>

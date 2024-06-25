@@ -96,11 +96,11 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
           />
           </div>
       </div>
-      <div class="flex flex-row justify-between ">
+      <div class="flex flex-row h-12 justify-between items-center ">
         <div class="box-border  relative shrink-0 mt-1 h-auto text-2xl font-black w-1/2 text-slate-950">
           {props.name}
         </div>
-      <Link href={`/profiler/${business}/${id}`} class="box-border items-center px-4 py-1 font-black flex bg-[var(--swatch--brand)] asym-borders cursor-pointer">
+      <Link href={`/profiler/${business}/${id}`} class="box-border items-center px-4 py-1 font-black flex bg-[var(--swatch--brand)] asym-borders hover:border-r-[.25rem] hover:border-b-[.25rem] cursor-pointer">
           View Persona
       </Link>
       </div>
@@ -132,7 +132,7 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
             height="1024"
             src={image}
             alt={`Thumbnail ${index}`}
-            class="w-full h-auto object-cover rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 hover:border-b-[4px] hover:border-r-[4px] hover:bg-slate-300 cursor-pointer"
+            class="w-full h-auto object-cover rounded-lg border-t-4 border-l-4 border-solid border-b-[12px] border-r-[12px] border-slate-950 hover:border-b-[.25rem] hover:border-r-[.25rem] hover:bg-slate-300 cursor-pointer"
             onClick$={$(() => handleImageClick(image))}
           />
         ))}
