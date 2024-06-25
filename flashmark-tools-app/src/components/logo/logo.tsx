@@ -9,7 +9,7 @@ interface IconProps {
   pathData: string[];
 }
 
-const Icon = (props: IconProps) => {
+export const Icon = (props: IconProps) => {
   const { width, height, viewBox, fill, xmlns, pathData } = props;
   return (
     <svg width={width} height={height} viewBox={viewBox} fill={fill} xmlns={xmlns}>

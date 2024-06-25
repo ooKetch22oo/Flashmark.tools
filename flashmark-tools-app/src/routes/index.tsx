@@ -1,14 +1,15 @@
 import { component$ } from "@builder.io/qwik";
-import type { DocumentHead } from "@builder.io/qwik-city";
-import { SignUpForm } from "~/components/sign-up-form/sign-up-form";
+import { Link, type DocumentHead } from "@builder.io/qwik-city";
+import { BtnSm } from "~/components/btn-sm/btn-sm";
+import { SignUpForm } from "~/components/email-sign-up-form/email-sign-up-form";
 
 export default component$(() => {
   return (
     <div>
-      <section id="intro" class="mb-12">
+      <section id="intro" class="flex flex-col items-start min-h-[50svh] align-middle justify-around  mb-12">
         <h1 class="text-4xl font-bold mb-6">Unlock Deep Customer Insights in Minutes</h1>
         <p class="text-xl mb-8">Generate detailed user personas from any website with our AI-driven tool.</p>
-        <a href="/sign-up" class="bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700">Get Started for Free</a>
+        <BtnSm label="Get Started for Free" href="/auth/sign-up" />
       </section>
 
       <section id="what-is" class="mb-12">
@@ -38,7 +39,7 @@ export default component$(() => {
         </div>
       </section>
 
-      <section id="how-it-works" class="mb-12">
+      <section id="how-it-works" class="flex flex-col items-start mb-12">
         <h2 class="text-3xl font-bold mb-6">How Does It Work?</h2>
         <ol class="list-decimal list-inside space-y-4">
           <li>Enter the website URL you want to analyze.</li>
@@ -46,7 +47,7 @@ export default component$(() => {
           <li>Receive four detailed user personas, complete with demographic, psychographic, and behavioral data.</li>
           <li>Review the Personas and find new insights.</li>
         </ol>
-        <a href="/sign-up" class="inline-block mt-6 bg-blue-600 text-white px-6 py-3 rounded-lg text-lg font-semibold hover:bg-blue-700">Get Started for Free</a>
+        <BtnSm label="Get Started for Free" href="/auth/sign-up" />
       </section>
 
       <section id="pricing" class="mb-12">

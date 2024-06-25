@@ -1,5 +1,6 @@
 import { $, component$, useStore } from '@builder.io/qwik';
 import { Link, useNavigate } from '@builder.io/qwik-city';
+import { BtnSm } from '../btn-sm/btn-sm';
 
 interface PersonaCardProps {
   name: string;
@@ -100,9 +101,10 @@ export const PersonaCard = component$((props: PersonaCardProps) => {
         <div class="box-border  relative shrink-0 mt-1 h-auto text-2xl font-black w-1/2 text-slate-950">
           {props.name}
         </div>
-      <Link href={`/profiler/${business}/${id}`} class="box-border items-center px-4 py-1 font-black flex bg-[var(--swatch--brand)] asym-borders hover:border-r-[.25rem] hover:border-b-[.25rem] cursor-pointer">
+      {/* <Link href={`/profiler/${business}/${id}`} class="box-border items-center px-4 py-1 font-black flex bg-[var(--swatch--brand)] asym-borders hover:border-r-[.25rem] hover:border-b-[.25rem] cursor-pointer">
           View Persona
-      </Link>
+      </Link> */}
+      <BtnSm label="View Persona" href={`/profiler/${business}/${id}`} />
       </div>
       <div class="box-border flex relative flex-col shrink pb-8 h-auto max-h-48 overflow-auto">
         <div class="box-border relative shrink-0 h-auto font-bold text-slate-950">

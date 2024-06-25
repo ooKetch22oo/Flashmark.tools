@@ -1,5 +1,6 @@
 import { component$ } from '@builder.io/qwik';
 import { Link } from '@builder.io/qwik-city';
+import { BtnSm } from '../btn-sm/btn-sm';
 
 export interface BusinessCardProps {
   business: string;
@@ -17,9 +18,11 @@ export const BusinessCard = component$<BusinessCardProps>(({ business, website, 
           <h2 class="box-border relative text-sm shrink-0 h-auto font-semibold">{business.replace(/- /g, '')}</h2>
           <a href={website} target="_blank" class="box-border relative shrink-0 h-auto">{website}</a>
         </div>
-        <Link href={`/profiler/${business}`} class="box-border items-center px-4 py-1 font-black flex bg-[var(--swatch--brand)] asym-borders hover:border-r-[.25rem] hover:border-b-[.25rem] cursor-pointer">
+        {/* <Link href={`/profiler/${business}`} class="box-border items-center px-4 py-1 font-black flex bg-[var(--swatch--brand)] asym-borders hover:border-r-[.25rem] hover:border-b-[.25rem] cursor-pointer">
           View Persona
-      </Link>      </header>
+      </Link>       */}
+      <BtnSm label="View Persona" href={`/profiler/${business}`} />
+      </header>
       <p class="box-border relative px-4 py-1 h-auto bg-zinc-100 max-h-[150px] overflow-auto">{summary}</p>
     </div>
   );
