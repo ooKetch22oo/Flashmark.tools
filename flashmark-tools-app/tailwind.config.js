@@ -1,22 +1,14 @@
 /** @type {import('tailwindcss').Config} */
-export default {
+module.exports = {
   important: true,
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
-    extend: {},
+    extend: {
+      columnCount: [2],
+    },
   },
-  plugins: [],
+  variants: {},
+  plugins: [
+    require('tailwindcss-multi-column')(),
+  ],
 };
-// module.exports = {
-//   important: true,
-//   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
-//   theme: {
-//     extend: {
-//       columnCount: [2],
-//     },
-//   },
-//   variants: {},
-//   plugins: [
-//     require('tailwindcss-multi-column')(),
-//   ],
-// }
