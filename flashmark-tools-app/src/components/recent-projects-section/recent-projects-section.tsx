@@ -26,13 +26,11 @@ export const RecentProjectsSection = component$<RecentProjectsSectionProps>(({ r
         </thead>
         <tbody>
           {recentProjects.value.map((project, index) => (
-            <Link key={index} href="/profiler" class="block">
-              <tr class={index % 2 === 0 ? 'bg-zinc-100 hover:bg-cyan-600' : 'bg-zinc-300 hover:bg-cyan-600'}>
+              <tr class={index % 2 === 0 ? 'bg-zinc-100 hover:bg-cyan-600 cursor-pointer' : 'bg-zinc-300 hover:bg-cyan-600 cursor-pointer'}>
                 <td class="p-2 text-left">{project.name}</td>
                 <td class="text-left">{project.personas}</td>
                 <td class="p-2 text-right">{project.date}</td>
               </tr>
-            </Link>
           ))}
         </tbody>
       </table>
