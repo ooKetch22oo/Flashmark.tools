@@ -1,17 +1,15 @@
 import { component$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
-import { DashHeader } from "~/components/header/header";
-
+import { SignUpForm } from "~/components/sign-up-form/sign-up-form";
+import { Testimonials } from "~/components/testimonials/testimonials";
 
 export default component$(() => {
   return (
     <div>
-      <h1>Welcom to Flashmark.tools 👋</h1>
-      <div>
-        Can't wait to see what you build with qwik!
-        <br />
-        Happy coding.
-      </div>
+      <h1 class="text-3xl font-bold mb-6">Welcome to Flashmark.tools 👋</h1>
+      <p class="mb-8">AI tools to do the "Not Creative, Creative Stuff."</p>
+      <SignUpForm />
+      <Testimonials />
     </div>
   );
 });
