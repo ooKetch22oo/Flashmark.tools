@@ -1,5 +1,6 @@
-import { component$ } from '@builder.io/qwik';
-import { useSignal } from '@builder.io/qwik';
+import { component$, useSignal } from '@builder.io/qwik';
+import { supabase } from '~/supabase';
+
 
 export default component$(() => {
   const welcomeMessage = useSignal('Welcome to your Flashmark Tools Dashboard!');
