@@ -1,4 +1,4 @@
-import { component$, useSignal } from '@builder.io/qwik';
+import { component$, useSignal, useComputed$ } from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import { supabase } from '~/supabase';
 import { WelcomeSection } from '~/components/welcome-section/welcome-section';
@@ -59,6 +59,7 @@ export default component$(() => {
     remainingTokens: 100,
   });
   const recentProjects = useRecentProjects();
+  const recentProjectsSignal = useComputed$(() => recentProjects.value);
 
   return (
     <div class="flex flex-col h-full">
@@ -69,7 +70,7 @@ export default component$(() => {
         <WelcomeSection welcomeMessage={welcomeMessage} />
         <UserStatsSection userStats={userStats} />
         <div class="col-span-1 md:col-span-2">
-          <RecentProjectsSection recentProjects={useSignal(recentProjects.value)} />
+          <RecentProjectsSection recentProjects={recentProjectsSignal} />
         </div>
       </div>
     </div>
