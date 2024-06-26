@@ -1,5 +1,5 @@
 import { component$, Slot } from "@builder.io/qwik";
-import type { RequestHandler } from "@builder.io/qwik-city";
+import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
 import NavSidebar from "../components/nav-sidebar/nav-sidebar";
 import { DashHeader } from "~/components/header/header";
 
@@ -34,3 +34,13 @@ export default component$(() => {
   </main>
   );
 });
+
+export const head: DocumentHead = {
+  title: "flashmark.tools - AI-Driven User Persona Generation",
+  meta: [
+    {
+      name: "description",
+      content: "Generate detailed user personas from any website with our AI-driven tool. Unlock deep customer insights in minutes.",
+    },
+  ],
+};

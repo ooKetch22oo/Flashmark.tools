@@ -17,38 +17,42 @@ export const useRecentProjects = routeLoader$<Project[]>(async () => {
   try {
     const { data, error } = await supabase
       .from('profiler_personas')
-      .select('business, created_at')
+      .select('business, created_time')
       .eq('user_id', userId)
-      .order('created_at', { ascending: false });
+      .order('created_time', { ascending: false });
 
     if (error) {
       console.error('Error fetching recent projects:', error.message);
       return [];
     }
 
-  const businessMap = new Map<string, Project>();
+    const businessMap = new Map<string, Project>();
 
-  data.forEach(item => {
-    if (!businessMap.has(item.business)) {
-      businessMap.set(item.business, {
-        business: item.business,
-        date: new Date(item.created_at).toISOString().split('T')[0],
-        personas: 1
-      });
-    } else {
-      const project = businessMap.get(item.business);
-      if (project) {
-        project.personas += 1;
+    data.forEach(item => {
+      if (!businessMap.has(item.business)) {
+        businessMap.set(item.business, {
+          business: item.business,
+          date: new Date(item.created_time).toISOString().split('T')[0],
+          personas: 1
+        });
+      } else {
+        const project = businessMap.get(item.business);
+        if (project) {
+          project.personas += 1;
+        }
       }
-    }
-  });
+    });
 
-  const recentProjects = Array.from(businessMap.values())
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-    .slice(0, 5);
+    const recentProjects = Array.from(businessMap.values())
+      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+      .slice(0, 5);
 
-  return recentProjects;
-}));
+    return recentProjects;
+  } catch (error) {
+    console.error('Error in useRecentProjects:', error);
+    return [];
+  }
+});
 
 export default component$(() => {
   const welcomeMessage = useSignal('Welcome to your Flashmark Tools Dashboard!');

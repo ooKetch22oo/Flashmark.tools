@@ -1,6 +1,7 @@
 import { component$, Slot } from '@builder.io/qwik';
 import { Header } from '~/components/landing-header/landing-header';
 import { Footer } from '~/components/footer/footer';
+import { DocumentHead } from '@builder.io/qwik-city';
 
 export default component$(() => {
   return (
@@ -13,3 +14,13 @@ export default component$(() => {
     </div>
   );
 });
+
+export const head: DocumentHead = {
+  title: "flashmark.tools - AI-Driven User Persona Generation",
+  meta: [
+    {
+      name: "description",
+      content: "Generate detailed user personas from any website with our AI-driven tool. Unlock deep customer insights in minutes.",
+    },
+  ],
+};

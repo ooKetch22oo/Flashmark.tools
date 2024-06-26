@@ -76,12 +76,3 @@ export default component$(() => {
   );
 });
 
-export const head: DocumentHead = {
-  title: "Flashmark.tools - AI-Driven User Persona Generation",
-  meta: [
-    {
-      name: "description",
-      content: "Generate detailed user personas from any website with our AI-driven tool. Unlock deep customer insights in minutes.",
-    },
-  ],
-};
