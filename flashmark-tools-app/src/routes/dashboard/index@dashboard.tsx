@@ -13,16 +13,18 @@ export interface Project {
   personas: number;
 }
 
-export const useRecentProjects = routeLoader$<Project[]>(async ({ fail }) => {
-  const { data, error } = await supabase
-    .from('profiler_personas')
-    .select('business, created_at')
-    .eq('user_id', userId)
-    .order('created_at', { ascending: false });
+export const useRecentProjects = routeLoader$<Project[]>(async () => {
+  try {
+    const { data, error } = await supabase
+      .from('profiler_personas')
+      .select('business, created_at')
+      .eq('user_id', userId)
+      .order('created_at', { ascending: false });
 
-  if (error) {
-    return fail(500, { error: error.message });
-  }
+    if (error) {
+      console.error('Error fetching recent projects:', error.message);
+      return [];
+    }
 
   const businessMap = new Map<string, Project>();
 
