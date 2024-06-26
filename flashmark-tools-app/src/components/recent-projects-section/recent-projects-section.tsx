@@ -16,7 +16,7 @@ export const RecentProjectsSection = component$<RecentProjectsSectionProps>(({ r
 
 
   return (
-    <div class="box-border flex relative flex-col h-full gap-4 p-4 rounded-lg border-t-4 border-l-4 border-solid border-slate-950 border-b-[12px] border-r-[12px] flex-grow min-w-[20svw] max-sm:max-w-full">
+    <div class="box-border flex relative flex-col justify-between h-full gap-4 p-4 rounded-lg border-t-4 border-l-4 border-solid border-slate-950 border-b-[12px] border-r-[12px] flex-grow min-w-[20svw] max-sm:max-w-full">
       <h2 class="text-xl font-semibold mb-2">Recent Projects</h2>
       <div class="box-border rounded-lg border-t-4 border-l-4 border-solid border-slate-950 border-b-[12px] border-r-[12px]">
       <table class="w-full ">
@@ -37,8 +37,7 @@ export const RecentProjectsSection = component$<RecentProjectsSectionProps>(({ r
                   <tr 
                       key={index}
                       onClick$={handleRowClick}
-                      class={index % 2 === 0 ? 'bg-zinc-100 hover:bg-cyan-600 cursor-pointer' : 'bg-zinc-300 hover:bg-cyan-600 cursor-pointer'}
-                  >
+class={index % 2 === 0 ? 'bg-zinc-100 hover:bg-[var(--swatch--accent-3)] cursor-pointer' : 'bg-zinc-300 hover:bg-[var(--swatch--accent-3)] cursor-pointer'}                  >
                       <td class="p-2 text-left">{project.business}</td>
                       <td class="text-left">{project.personas}</td>
                       <td class="p-2 text-right">{project.date}</td>
