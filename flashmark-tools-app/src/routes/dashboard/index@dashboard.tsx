@@ -7,7 +7,13 @@ import { RecentProjectsSection } from '~/components/recent-projects-section/rece
 
 const userId = '37706f5f-2c6c-438c-bc63-dafc2ba0c22d'; // Replace with actual user ID logic
 
-export const useRecentProjects = routeLoader$(async ({ fail }) => {
+export interface Project {
+  business: string;
+  date: string;
+  personas: number;
+}
+
+export const useRecentProjects = routeLoader$<Project[]>(async ({ fail }) => {
   const { data, error } = await supabase
     .from('profiler_personas')
     .select('business, created_at')
@@ -18,7 +24,7 @@ export const useRecentProjects = routeLoader$(async ({ fail }) => {
     return fail(500, { error: error.message });
   }
 
-  const businessMap = new Map();
+  const businessMap = new Map<string, Project>();
 
   data.forEach(item => {
     if (!businessMap.has(item.business)) {
@@ -28,7 +34,10 @@ export const useRecentProjects = routeLoader$(async ({ fail }) => {
         personas: 1
       });
     } else {
-      businessMap.get(item.business).personas += 1;
+      const project = businessMap.get(item.business);
+      if (project) {
+        project.personas += 1;
+      }
     }
   });
 
