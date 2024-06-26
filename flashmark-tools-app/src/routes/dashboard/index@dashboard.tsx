@@ -13,9 +13,9 @@ export default component$(() => {
     remainingTokens: 100,
   });
   const recentProjects = useSignal([
-    { name: 'Business A', date: '2023-06-01', personas: 4 },
-    { name: 'Business B', date: '2023-06-15', personas: 8 },
-    { name: 'Business C', date: '2023-06-30', personas: 12 },
+    { business: 'Business A', date: '2023-06-01', personas: 4 },
+    { business: 'Business B', date: '2023-06-15', personas: 8 },
+    { business: 'Business C', date: '2023-06-30', personas: 12 },
   ]);
 
   return (
