@@ -18,19 +18,23 @@ export const useRecentProjects = routeLoader$(async ({ fail }) => {
     return fail(500, { error: error.message });
   }
 
-  const businessCounts = data.reduce((acc, current) => {
-    acc[current.business] = (acc[current.business] || 0) + 1;
-    return acc;
-  }, {});
+  const businessMap = new Map();
 
-  const recentProjects = Object.entries(businessCounts).map(([business, count]) => {
-    const latestProject = data.find(item => item.business === business);
-    return {
-      business,
-      date: new Date(latestProject.created_at).toISOString().split('T')[0],
-      personas: count,
-    };
-  }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5);
+  data.forEach(item => {
+    if (!businessMap.has(item.business)) {
+      businessMap.set(item.business, {
+        business: item.business,
+        date: new Date(item.created_at).toISOString().split('T')[0],
+        personas: 1
+      });
+    } else {
+      businessMap.get(item.business).personas += 1;
+    }
+  });
+
+  const recentProjects = Array.from(businessMap.values())
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 5);
 
   return recentProjects;
 });
