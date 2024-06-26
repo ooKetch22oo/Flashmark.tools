@@ -47,17 +47,15 @@ export default component$(() => {
 
   return (
     <div class="flex flex-col h-full">
-      <h1 class="flex gap-5 justify-between py-4 pr-5 pl-4 w-full border-b-4 border-black border-solid max-md:flex-wrap max-md:max-w-full ">Dashboard</h1>
-      <div class="grid grid-cols-2 h-full gap-4 p-4">
-        <div class="w-full h-full">
-          <WelcomeSection welcomeMessage={welcomeMessage} />
+      <header class="flex gap-5 justify-between py-4 pr-5 pl-4 w-full border-b-4 border-black border-solid max-md:flex-wrap max-md:max-w-full">
+        <h1 class="text-3xl font-semibold">Dashboard</h1>
+      </header>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 grow overflow-auto">
+        <WelcomeSection welcomeMessage={welcomeMessage} />
+        <UserStatsSection userStats={userStats} />
+        <div class="col-span-1 md:col-span-2">
+          <RecentProjectsSection recentProjects={recentProjects} />
         </div>
-        <div class="w-full h-full">
-          <UserStatsSection userStats={userStats} />
-        </div>
-      <div class="w-full h-full col-span-2 flex-grow">
-        <RecentProjectsSection recentProjects={recentProjects} />
-      </div>
       </div>
     </div>
   );
