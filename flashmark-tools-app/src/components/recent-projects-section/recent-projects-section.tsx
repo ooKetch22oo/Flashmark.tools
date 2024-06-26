@@ -2,7 +2,7 @@ import { component$, Signal, $ } from '@builder.io/qwik';
 import { useNavigate } from '@builder.io/qwik-city';
 
 interface Project {
-  name: string;
+  business: string;
   date: string;
   personas: number;
 }
@@ -30,7 +30,7 @@ export const RecentProjectsSection = component$<RecentProjectsSectionProps>(({ r
         <tbody>
           {recentProjects.value.map((project, index) => {
               const handleRowClick = $(() => {
-                  nav(`/profiler/${recentProjects.value[index].name}`);
+                  nav(`/profiler/${recentProjects.value[index].business}`);
               });
           
               return (
@@ -39,7 +39,7 @@ export const RecentProjectsSection = component$<RecentProjectsSectionProps>(({ r
                       onClick$={handleRowClick}
                       class={index % 2 === 0 ? 'bg-zinc-100 hover:bg-cyan-600 cursor-pointer' : 'bg-zinc-300 hover:bg-cyan-600 cursor-pointer'}
                   >
-                      <td class="p-2 text-left">{project.name}</td>
+                      <td class="p-2 text-left">{project.business}</td>
                       <td class="text-left">{project.personas}</td>
                       <td class="p-2 text-right">{project.date}</td>
                   </tr>
