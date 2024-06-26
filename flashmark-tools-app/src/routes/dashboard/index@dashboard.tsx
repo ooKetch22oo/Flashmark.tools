@@ -52,7 +52,7 @@ export default component$(() => {
   return (
     <div class="flex flex-col h-full">
       <header class="flex gap-5 justify-between py-4 pr-5 pl-4 w-full border-b-4 border-black border-solid max-md:flex-wrap max-md:max-w-full">
-        <h1 class="text-3xl font-semibold">Dashboard</h1>
+        <h1 class="my-auto text-3xl font-semibold leading-10 text-slate-950">Dashboard</h1>
       </header>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 grow overflow-auto">
         <WelcomeSection welcomeMessage={welcomeMessage} />
