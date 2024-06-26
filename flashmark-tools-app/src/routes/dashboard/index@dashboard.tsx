@@ -48,7 +48,7 @@ export const useRecentProjects = routeLoader$<Project[]>(async () => {
     .slice(0, 5);
 
   return recentProjects;
-}));
+});
 
 export default component$(() => {
   const welcomeMessage = useSignal('Welcome to your Flashmark Tools Dashboard!');
