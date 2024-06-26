@@ -1,8 +1,39 @@
 import { component$, useSignal } from '@builder.io/qwik';
+import { routeLoader$ } from '@builder.io/qwik-city';
 import { supabase } from '~/supabase';
 import { WelcomeSection } from '~/components/welcome-section/welcome-section';
 import { UserStatsSection } from '~/components/user-stats-section/user-stats-section';
 import { RecentProjectsSection } from '~/components/recent-projects-section/recent-projects-section';
+
+const userId = '37706f5f-2c6c-438c-bc63-dafc2ba0c22d'; // Replace with actual user ID logic
+
+export const useRecentProjects = routeLoader$(async ({ fail }) => {
+  const { data, error } = await supabase
+    .from('profiler_personas')
+    .select('business, created_at')
+    .eq('user_id', userId)
+    .order('created_at', { ascending: false });
+
+  if (error) {
+    return fail(500, { error: error.message });
+  }
+
+  const businessCounts = data.reduce((acc, current) => {
+    acc[current.business] = (acc[current.business] || 0) + 1;
+    return acc;
+  }, {});
+
+  const recentProjects = Object.entries(businessCounts).map(([business, count]) => {
+    const latestProject = data.find(item => item.business === business);
+    return {
+      business,
+      date: new Date(latestProject.created_at).toISOString().split('T')[0],
+      personas: count,
+    };
+  }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()).slice(0, 5);
+
+  return recentProjects;
+});
 
 export default component$(() => {
   const welcomeMessage = useSignal('Welcome to your Flashmark Tools Dashboard!');
@@ -12,11 +43,7 @@ export default component$(() => {
     totalHoursSaved: 25,
     remainingTokens: 100,
   });
-  const recentProjects = useSignal([
-    { business: 'Business A', date: '2023-06-01', personas: 4 },
-    { business: 'Business B', date: '2023-06-15', personas: 8 },
-    { business: 'Business C', date: '2023-06-30', personas: 12 },
-  ]);
+  const recentProjects = useRecentProjects();
 
   return (
     <div class="flex flex-col h-full">
