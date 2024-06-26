@@ -67,7 +67,7 @@ export default component$(() => {
         <WelcomeSection welcomeMessage={welcomeMessage} />
         <UserStatsSection userStats={userStats} />
         <div class="col-span-1 md:col-span-2">
-          <RecentProjectsSection recentProjects={recentProjects} />
+          <RecentProjectsSection recentProjects={useSignal(recentProjects.value)} />
         </div>
       </div>
     </div>
