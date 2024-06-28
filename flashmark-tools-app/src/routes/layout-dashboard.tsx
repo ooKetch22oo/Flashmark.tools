@@ -29,14 +29,19 @@ export const onRequest: RequestHandler = async ({ next, redirect, url, cookie })
 
     if (error) {
       // Invalid session, clear cookies and redirect to login
-      cookie.delete('sb-access-token', { path: '/' });
-      cookie.delete('sb-refresh-token', { path: '/' });
+      cookie.delete('sb-access-token', { path: '/', secure: true, httpOnly: true, sameSite: 'strict' });
+      cookie.delete('sb-refresh-token', { path: '/', secure: true, httpOnly: true, sameSite: 'strict' });
       throw redirect(302, '/auth/login');
     }
 
     if (data.session) {
-      // Valid session, continue
+      // Valid session, update cookies and continue
+      cookie.set('sb-access-token', data.session.access_token, { secure: true, httpOnly: true, sameSite: 'strict' });
+      cookie.set('sb-refresh-token', data.session.refresh_token, { secure: true, httpOnly: true, sameSite: 'strict' });
       await next();
+    } else {
+      // No session, redirect to login
+      throw redirect(302, '/auth/login');
     }
   } else if (!url.pathname.startsWith('/auth/')) {
     // No session and not on an auth page, redirect to login
