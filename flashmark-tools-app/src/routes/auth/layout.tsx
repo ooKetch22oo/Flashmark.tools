@@ -42,7 +42,7 @@ export const onRequest: RequestHandler = async ({ next, redirect, url, cookie })
 
 export default component$(() => {
   return (
-    <section>
+    <section class="auth-layout">
       <Slot />
     </section>
   );
