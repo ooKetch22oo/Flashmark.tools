@@ -2,6 +2,7 @@ import { component$, Slot } from "@builder.io/qwik";
 import type { DocumentHead, RequestHandler } from "@builder.io/qwik-city";
 import NavSidebar from "../components/nav-sidebar/nav-sidebar";
 import { DashHeader } from "~/components/header/header";
+import { supabase } from "~/supabase";
 
 
 export const onGet: RequestHandler = async ({ cacheControl }) => {
@@ -13,6 +14,37 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
     // Max once every 5 seconds, revalidate on the server to get a fresh version of this page
     maxAge: 5,
   });
+};
+
+
+export const onRequest: RequestHandler = async ({ next, redirect, url, cookie }) => {
+  const accessToken = cookie.get('sb-access-token')?.value;
+  const refreshToken = cookie.get('sb-refresh-token')?.value;
+
+  if (accessToken && refreshToken) {
+    const { data, error } = await supabase.auth.setSession({
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    });
+
+    if (error) {
+      // Invalid session, clear cookies and redirect to login
+      cookie.delete('sb-access-token', { path: '/' });
+      cookie.delete('sb-refresh-token', { path: '/' });
+      throw redirect(302, '/auth/login');
+    }
+
+    if (data.session) {
+      // Valid session, continue
+      await next();
+    }
+  } else if (!url.pathname.startsWith('/auth/')) {
+    // No session and not on an auth page, redirect to login
+    throw redirect(302, '/auth/login');
+  } else {
+    // On an auth page, allow access
+    await next();
+  }
 };
 
 
