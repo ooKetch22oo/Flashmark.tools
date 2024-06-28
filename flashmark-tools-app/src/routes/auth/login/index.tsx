@@ -3,8 +3,7 @@ import { AuthForm } from '~/components/auth-form/auth-form';
 import { RequestHandler, Form } from '@builder.io/qwik-city';
 import { supabase } from '~/supabase';
 
-export const onPost: RequestHandler = async (requestEvent) => {
-  const { request, cookie, redirect } = requestEvent;
+export const onPost: RequestHandler = async ({ request, cookie, redirect }) => {
   const formData = await request.formData();
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
@@ -15,7 +14,7 @@ export const onPost: RequestHandler = async (requestEvent) => {
   });
 
   if (error) {
-    return { success: false, error: error.message };
+    throw new Error(JSON.stringify({ success: false, error: error.message }));
   }
 
   if (data.session) {
@@ -35,7 +34,7 @@ export const onPost: RequestHandler = async (requestEvent) => {
     throw redirect(302, '/dashboard');
   }
 
-  return { success: false, error: 'Login failed' };
+  throw new Error(JSON.stringify({ success: false, error: 'Login failed' }));
 };
 
 export default component$(() => {
