@@ -58,12 +58,12 @@ export default component$(() => {
 
 
   return (
-    <main>
-      <div class='flex min-h-screen bg-green-400'>
+    <main class="min-h-screen bg-green-400">
+      <div class="flex">
         <NavSidebar />
-        <div class="flex flex-col stretch flex-grow h-[95svh] gap-4 flex-1 my-auto px-4 max-h-[95svh] overflow-auto">
+        <div class="flex flex-col flex-grow h-[95svh] gap-4 px-4 overflow-auto">
           <DashHeader title="flashmark.tools" showIconPrint={true} showIconHelp={true} />
-          <div class="flex flex-col flex-grow h-full w-full rounded-lg asym-borders overflow-hidden">
+          <div class="flex flex-col flex-grow rounded-lg asym-borders overflow-hidden">
             <Slot />
           </div>
         </div>
