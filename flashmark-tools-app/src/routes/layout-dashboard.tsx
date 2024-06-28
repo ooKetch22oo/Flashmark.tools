@@ -29,15 +29,15 @@ export const onRequest: RequestHandler = async ({ next, redirect, url, cookie })
 
     if (error) {
       // Invalid session, clear cookies and redirect to login
-      cookie.delete('sb-access-token', { path: '/', secure: true, httpOnly: true, sameSite: 'strict' });
-      cookie.delete('sb-refresh-token', { path: '/', secure: true, httpOnly: true, sameSite: 'strict' });
+      cookie.delete('sb-access-token', { path: '/', httpOnly: true, sameSite: 'strict' });
+      cookie.delete('sb-refresh-token', { path: '/', httpOnly: true, sameSite: 'strict' });
       throw redirect(302, '/auth/login');
     }
 
     if (data.session) {
       // Valid session, update cookies and continue
-      cookie.set('sb-access-token', data.session.access_token, { secure: true, httpOnly: true, sameSite: 'strict' });
-      cookie.set('sb-refresh-token', data.session.refresh_token, { secure: true, httpOnly: true, sameSite: 'strict' });
+      cookie.set('sb-access-token', data.session.access_token, { httpOnly: true, sameSite: 'strict' });
+      cookie.set('sb-refresh-token', data.session.refresh_token, { httpOnly: true, sameSite: 'strict' });
       await next();
     } else {
       // No session, redirect to login
