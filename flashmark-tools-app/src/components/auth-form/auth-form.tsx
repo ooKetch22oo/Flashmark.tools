@@ -1,5 +1,5 @@
 import { component$, $, useSignal } from '@builder.io/qwik';
-import { useLocation, useNavigate } from '@builder.io/qwik-city';
+import { useLocation, useNavigate, Form } from '@builder.io/qwik-city';
 import { supabase } from '../../supabase';
 
 export const AuthForm = component$(() => {
@@ -12,7 +12,7 @@ export const AuthForm = component$(() => {
 
   const isSignUp = location.url.pathname.includes('sign-up');
 
-  const handleSubmit = $(async (event: Event) => {
+  const handleSubmit = $(async (event: SubmitEvent) => {
     event.preventDefault();
     if (!email.value || !password.value) {
       error.value = 'Please enter both email and password.';
@@ -48,13 +48,14 @@ export const AuthForm = component$(() => {
   });
 
   return (
-    <form onSubmit$={handleSubmit} class="space-y-4">
+    <Form onSubmit$={handleSubmit} class="space-y-4">
       {error.value && <p class="text-red-500">{error.value}</p>}
       <div>
         <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Email</label>
         <input
           type="email"
           id="email"
+          name="email"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           placeholder="name@example.com"
           required
@@ -66,6 +67,7 @@ export const AuthForm = component$(() => {
         <input
           type="password"
           id="password"
+          name="password"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
           required
           onInput$={(event) => password.value = (event.target as HTMLInputElement).value}
@@ -77,6 +79,7 @@ export const AuthForm = component$(() => {
           <input
             type="password"
             id="confirm-password"
+            name="confirm-password"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
             required
             onInput$={(event) => confirmPassword.value = (event.target as HTMLInputElement).value}
@@ -89,6 +92,6 @@ export const AuthForm = component$(() => {
       >
         {isSignUp ? 'Sign Up' : 'Log In'}
       </button>
-    </form>
+    </Form>
   );
 });
