@@ -4,7 +4,7 @@ import { AuthForm } from '~/components/auth-form/auth-form';
 export default component$(() => {
   return (
     <div class="max-w-md mx-auto mt-8">
-      <h1 class="text-2xl font-bold mb-4">Sign Up</h1>
+      <h1 class="text-2xl font-bold mb-4">Sign-up</h1>
       <AuthForm />
     </div>
   );

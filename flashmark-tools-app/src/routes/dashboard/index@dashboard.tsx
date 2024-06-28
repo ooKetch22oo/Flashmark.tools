@@ -59,7 +59,7 @@ export default component$(() => {
   const userStats = useSignal({
     toolsUsed: 5,
     personasCreated: 10,
-    totalHoursSaved: 25,
+    // totalHoursSaved: 25,
     remainingTokens: 100,
   });
   const recentProjects = useRecentProjects();
