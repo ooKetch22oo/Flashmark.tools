@@ -1,21 +1,18 @@
 import { component$, $, useSignal } from '@builder.io/qwik';
-import { useLocation } from '@builder.io/qwik-city';
+import { useLocation, useNavigate } from '@builder.io/qwik-city';
+import { supabase } from '../../supabase';
 
-
-export interface AuthFormProps {
-  onSubmit?: (email: string, password: string) => void;
-}
-
-export const AuthForm = component$<AuthFormProps>(({ onSubmit }) => {
+export const AuthForm = component$(() => {
   const email = useSignal('');
   const password = useSignal('');
   const confirmPassword = useSignal('');
   const error = useSignal('');
   const location = useLocation();
+  const nav = useNavigate();
 
   const isSignUp = location.url.pathname.includes('sign-up');
 
-  const handleSubmit = $((event: Event) => {
+  const handleSubmit = $(async (event: Event) => {
     event.preventDefault();
     if (!email.value || !password.value) {
       error.value = 'Please enter both email and password.';
@@ -26,8 +23,30 @@ export const AuthForm = component$<AuthFormProps>(({ onSubmit }) => {
       return;
     }
     error.value = '';
-    onSubmit?.(email.value, password.value);
+
+    try {
+      if (isSignUp) {
+        const { data, error } = await supabase.auth.signUp({
+          email: email.value,
+          password: password.value,
+        });
+        if (error) throw error;
+        // Handle successful sign up
+        nav('/dashboard');
+      } else {
+        const { data, error } = await supabase.auth.signInWithPassword({
+          email: email.value,
+          password: password.value,
+        });
+        if (error) throw error;
+        // Handle successful login
+        nav('/dashboard');
+      }
+    } catch (err: any) {
+      error.value = err.message;
+    }
   });
+
 
   return (
     <form onSubmit$={handleSubmit} class="space-y-4">
