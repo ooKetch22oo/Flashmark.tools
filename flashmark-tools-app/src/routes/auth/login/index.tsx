@@ -1,6 +1,6 @@
-import { component$ } from '@builder.io/qwik';
+import { component$, useSignal } from '@builder.io/qwik';
 import { AuthForm } from '~/components/auth-form/auth-form';
-import { RequestHandler } from '@builder.io/qwik-city';
+import { RequestHandler, Form } from '@builder.io/qwik-city';
 import { supabase } from '~/supabase';
 
 export const onPost: RequestHandler = async ({ request, cookie, redirect }) => {
@@ -14,7 +14,6 @@ export const onPost: RequestHandler = async ({ request, cookie, redirect }) => {
   });
 
   if (error) {
-    // Handle error (you might want to pass this to the component to display)
     return { success: false, error: error.message };
   }
 
@@ -39,10 +38,17 @@ export const onPost: RequestHandler = async ({ request, cookie, redirect }) => {
 };
 
 export default component$(() => {
+  const errorSignal = useSignal('');
+
   return (
     <div class="max-w-md mx-auto mt-8">
       <h1 class="text-2xl font-bold mb-4">Login</h1>
-      <AuthForm />
+      <Form action="/auth/login">
+        <AuthForm />
+        {errorSignal.value && (
+          <div class="text-red-500 mt-2">{errorSignal.value}</div>
+        )}
+      </Form>
     </div>
   );
 });
