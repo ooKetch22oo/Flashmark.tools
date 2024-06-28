@@ -1,7 +1,14 @@
 import { RequestHandler } from '@builder.io/qwik-city';
+import { supabase } from '~/supabase';
 
-export const onGet: RequestHandler = async ({ redirect }) => {
-  // This route will be hit if someone tries to access /auth/logout directly
-  // We'll just redirect them to the login page
+export const onGet: RequestHandler = async ({ redirect, cookie }) => {
+  // Sign out from Supabase
+  await supabase.auth.signOut();
+
+  // Clear the auth cookies
+  cookie.delete('sb-access-token', { path: '/', secure: true, httpOnly: true, sameSite: 'strict' });
+  cookie.delete('sb-refresh-token', { path: '/', secure: true, httpOnly: true, sameSite: 'strict' });
+
+  // Redirect to the login page
   throw redirect(302, '/auth/login');
 };
