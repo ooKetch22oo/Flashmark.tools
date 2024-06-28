@@ -42,8 +42,10 @@ export const onRequest: RequestHandler = async ({ next, redirect, url, cookie })
 
 export default component$(() => {
   return (
-    <section class="auth-layout">
-      <Slot />
+    <section class="auth-layout flex flex-grow items-center justify-center bg-gray-100">
+      <div class="bg-white p-8 rounded-lg align-middle shadow-md w-full max-w-md">
+        <Slot />
+      </div>
     </section>
   );
 });
