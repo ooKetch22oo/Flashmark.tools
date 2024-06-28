@@ -20,15 +20,15 @@ export const onRequest: RequestHandler = async ({ next, redirect, url, cookie })
 
     if (error) {
       // Token is invalid or expired
-      cookie.delete('sb-access-token', { path: '/', httpOnly: true, sameSite: 'strict' });
-      cookie.delete('sb-refresh-token', { path: '/', httpOnly: true, sameSite: 'strict' });
+      cookie.delete('sb-access-token', { path: '/', sameSite: 'strict' });
+      cookie.delete('sb-refresh-token', { path: '/', sameSite: 'strict' });
       if (!url.pathname.startsWith('/auth')) {
         throw redirect(302, '/auth/login');
       }
     } else if (data.session) {
       // Token is valid, update it in the cookie
-      cookie.set('sb-access-token', data.session.access_token, { httpOnly: true, sameSite: 'strict' });
-      cookie.set('sb-refresh-token', data.session.refresh_token, { httpOnly: true, sameSite: 'strict' });
+      cookie.set('sb-access-token', data.session.access_token, { sameSite: 'strict' });
+      cookie.set('sb-refresh-token', data.session.refresh_token, { sameSite: 'strict' });
       
       // If user is authenticated and trying to access auth pages, redirect to dashboard
       if (url.pathname.startsWith('/auth')) {
