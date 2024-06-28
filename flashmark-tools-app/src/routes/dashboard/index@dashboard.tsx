@@ -1,4 +1,4 @@
-import { component$, useSignal, useComputed$ } from '@builder.io/qwik';
+import { component$, useComputed$ } from '@builder.io/qwik';
 import { routeLoader$ } from '@builder.io/qwik-city';
 import { supabase } from '~/supabase';
 import { WelcomeSection } from '~/components/welcome-section/welcome-section';
@@ -12,6 +12,41 @@ export interface Project {
   date: string;
   personas: number;
 }
+
+export const useUserStats = routeLoader$(async () => {
+  try {
+    const { data: personasData, error: personasError } = await supabase
+      .from('profiler_personas')
+      .select('id')
+      .eq('user_id', userId);
+
+    if (personasError) {
+      console.error('Error fetching personas:', personasError.message);
+      return { personasCreated: 0, remainingTokens: 0 };
+    }
+
+    const personasCreated = personasData.length;
+
+    const { data: userInfoData, error: userInfoError } = await supabase
+      .from('user_info')
+      .select('profiler_uses_remaining')
+      .eq('id', userId)
+      .single();
+
+    if (userInfoError) {
+      console.error('Error fetching user info:', userInfoError.message);
+      return { personasCreated, remainingTokens: 0 };
+    }
+
+    return {
+      personasCreated,
+      remainingTokens: userInfoData.profiler_uses_remaining,
+    };
+  } catch (error) {
+    console.error('Error in useUserStats:', error);
+    return { personasCreated: 0, remainingTokens: 0 };
+  }
+});
 
 export const useRecentProjects = routeLoader$<Project[]>(async () => {
   try {
@@ -55,15 +90,20 @@ export const useRecentProjects = routeLoader$<Project[]>(async () => {
 });
 
 export default component$(() => {
-  const welcomeMessage = useSignal('Welcome to your Flashmark Tools Dashboard!');
-  const userStats = useSignal({
-    toolsUsed: 5,
-    personasCreated: 10,
-    // totalHoursSaved: 25,
-    remainingTokens: 100,
-  });
+  const welcomeMessage = 'Welcome to your Flashmark Tools Dashboard!';
   const recentProjects = useRecentProjects();
+  const userStats = useUserStats();
   const recentProjectsSignal = useComputed$(() => recentProjects.value);
+
+  const computedUserStats = useComputed$(() => {
+    const personasCreated = userStats.value.personasCreated;
+    return {
+      toolsUsed: Math.floor(personasCreated / 4),
+      personasCreated: personasCreated,
+      totalHoursSaved: (personasCreated / 4) * (2 * 4 - (8 / 60)),
+      remainingTokens: userStats.value.remainingTokens,
+    };
+  });
 
   return (
     <div class="flex flex-col h-full">
@@ -72,7 +112,7 @@ export default component$(() => {
       </header>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 grow overflow-auto">
         <WelcomeSection welcomeMessage={welcomeMessage} />
-        <UserStatsSection userStats={userStats} />
+        <UserStatsSection userStats={computedUserStats} />
         <div class="col-span-1 md:col-span-2">
           <RecentProjectsSection recentProjects={recentProjectsSignal} />
         </div>
