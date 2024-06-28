@@ -3,7 +3,8 @@ import { AuthForm } from '~/components/auth-form/auth-form';
 import { RequestHandler, Form } from '@builder.io/qwik-city';
 import { supabase } from '~/supabase';
 
-export const onPost: RequestHandler = async ({ request, cookie, redirect }) => {
+export const onPost: RequestHandler = async (requestEvent) => {
+  const { request, cookie, redirect } = requestEvent;
   const formData = await request.formData();
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
@@ -43,7 +44,7 @@ export default component$(() => {
   return (
     <div class="max-w-md mx-auto mt-8">
       <h1 class="text-2xl font-bold mb-4">Login</h1>
-      <Form action="/auth/login">
+      <Form>
         <AuthForm />
         {errorSignal.value && (
           <div class="text-red-500 mt-2">{errorSignal.value}</div>
