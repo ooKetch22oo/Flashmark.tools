@@ -104,6 +104,7 @@ export default component$(() => {
       remainingTokens: userStats.value.remainingTokens,
     };
   });
+  
 
   return (
     <div class="flex flex-col h-full">
