@@ -47,7 +47,6 @@ export const AuthForm = component$(() => {
     }
   });
 
-
   return (
     <form onSubmit$={handleSubmit} class="space-y-4">
       {error.value && <p class="text-red-500">{error.value}</p>}
