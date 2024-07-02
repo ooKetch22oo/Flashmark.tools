@@ -17,40 +17,40 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 };
 
 
-// export const onRequest: RequestHandler = async ({ next, redirect, url, cookie }) => {
-//   const accessToken = cookie.get('sb-access-token')?.value;
-//   const refreshToken = cookie.get('sb-refresh-token')?.value;
+export const onRequest: RequestHandler = async ({ next, redirect, url, cookie }) => {
+  const accessToken = cookie.get('sb-access-token')?.value;
+  const refreshToken = cookie.get('sb-refresh-token')?.value;
 
-//   if (accessToken && refreshToken) {
-//     const { data, error } = await supabase.auth.setSession({
-//       access_token: accessToken,
-//       refresh_token: refreshToken,
-//     });
+  if (accessToken && refreshToken) {
+    const { data, error } = await supabase.auth.setSession({
+      access_token: accessToken,
+      refresh_token: refreshToken,
+    });
 
-//     if (error) {
-//       // Invalid session, clear cookies and redirect to login
-//       cookie.delete('sb-access-token', { path: '/', sameSite: 'strict' });
-//       cookie.delete('sb-refresh-token', { path: '/', sameSite: 'strict' });
-//       throw redirect(302, '/auth/login');
-//     }
+    if (error) {
+      // Invalid session, clear cookies and redirect to login
+      cookie.delete('sb-access-token', { path: '/', sameSite: 'strict' });
+      cookie.delete('sb-refresh-token', { path: '/', sameSite: 'strict' });
+      throw redirect(302, '/auth/login');
+    }
 
-//     if (data.session) {
-//       // Valid session, update cookies and continue
-//       cookie.set('sb-access-token', data.session.access_token, { sameSite: 'strict' });
-//       cookie.set('sb-refresh-token', data.session.refresh_token, { sameSite: 'strict' });
-//       await next();
-//     } else {
-//       // No session, redirect to login
-//       throw redirect(302, '/auth/login');
-//     }
-//   } else if (!url.pathname.startsWith('/auth/')) {
-//     // No session and not on an auth page, redirect to login
-//     throw redirect(302, '/auth/login');
-//   } else {
-//     // On an auth page, allow access
-//     await next();
-//   }
-// };
+    if (data.session) {
+      // Valid session, update cookies and continue
+      cookie.set('sb-access-token', data.session.access_token, { sameSite: 'strict' });
+      cookie.set('sb-refresh-token', data.session.refresh_token, { sameSite: 'strict' });
+      await next();
+    } else {
+      // No session, redirect to login
+      throw redirect(302, '/auth/login');
+    }
+  } else if (!url.pathname.startsWith('/auth/')) {
+    // No session and not on an auth page, redirect to login
+    throw redirect(302, '/auth/login');
+  } else {
+    // On an auth page, allow access
+    await next();
+  }
+};
 
 
 export default component$(() => {
