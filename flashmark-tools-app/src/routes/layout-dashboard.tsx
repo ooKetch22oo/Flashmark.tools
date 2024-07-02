@@ -17,7 +17,7 @@ export const onGet: RequestHandler = async ({ cacheControl }) => {
 };
 
 
-export const onRequest: RequestHandler = async ({ next, redirect, url, cookie }) => {
+export const onRequest: RequestHandler = async ({ next, redirect, url, cookie, sharedMap }) => {
   const accessToken = cookie.get('sb-access-token')?.value;
   const refreshToken = cookie.get('sb-refresh-token')?.value;
 
@@ -38,6 +38,8 @@ export const onRequest: RequestHandler = async ({ next, redirect, url, cookie })
       // Valid session, update cookies and continue
       cookie.set('sb-access-token', data.session.access_token, { sameSite: 'strict' });
       cookie.set('sb-refresh-token', data.session.refresh_token, { sameSite: 'strict' });
+      // Store the user ID in the sharedMap for use in route loaders
+      sharedMap.set('userId', data.session.user.id);
       await next();
     } else {
       // No session, redirect to login
@@ -45,7 +47,7 @@ export const onRequest: RequestHandler = async ({ next, redirect, url, cookie })
     }
   } else if (!url.pathname.startsWith('/auth/')) {
     // No session and not on an auth page, redirect to login
-    throw redirect(302, '/auth/login');
+    throw redirect(302, `/auth/login?redirectTo=${url.pathname}`);
   } else {
     // On an auth page, allow access
     await next();
