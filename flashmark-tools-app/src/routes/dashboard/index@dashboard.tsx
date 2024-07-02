@@ -1,11 +1,9 @@
 import { component$, useComputed$ } from '@builder.io/qwik';
-import { routeLoader$ } from '@builder.io/qwik-city';
+import { routeLoader$, RequestHandler } from '@builder.io/qwik-city';
 import { supabase } from '~/supabase';
 import { WelcomeSection } from '~/components/welcome-section/welcome-section';
 import { UserStatsSection } from '~/components/user-stats-section/user-stats-section';
 import { RecentProjectsSection } from '~/components/recent-projects-section/recent-projects-section';
-
-const userId = '37706f5f-2c6c-438c-bc63-dafc2ba0c22d'; // Replace with actual user ID logic
 
 export interface Project {
   business: string;
@@ -13,7 +11,17 @@ export interface Project {
   personas: number;
 }
 
-export const useUserStats = routeLoader$(async () => {
+export const onRequest: RequestHandler = async ({ redirect, url, sharedMap }) => {
+  const { data: { session } } = await supabase.auth.getSession();
+  if (!session) {
+    throw redirect(302, `/auth/login?redirectTo=${url.pathname}`);
+  }
+  // Store the user ID in the sharedMap for use in route loaders
+  sharedMap.set('userId', session.user.id);
+};
+
+export const useUserStats = routeLoader$(async ({ sharedMap }) => {
+  const userId = sharedMap.get('userId') as string;
   try {
     const { data: personasData, error: personasError } = await supabase
       .from('profiler_personas')
@@ -48,7 +56,8 @@ export const useUserStats = routeLoader$(async () => {
   }
 });
 
-export const useRecentProjects = routeLoader$<Project[]>(async () => {
+export const useRecentProjects = routeLoader$<Project[]>(async ({ sharedMap }) => {
+  const userId = sharedMap.get('userId') as string;
   try {
     const { data, error } = await supabase
       .from('profiler_personas')
