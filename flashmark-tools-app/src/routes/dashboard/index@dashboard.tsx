@@ -122,7 +122,7 @@ export default component$(() => {
       </header>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 grow overflow-auto">
         <WelcomeSection welcomeMessage={welcomeMessage} />
-        <UserStatsSection userStats={computedUserStats} />
+        <UserStatsSection userStats={computedUserStats.value} />
         <div class="col-span-1 md:col-span-2">
           <RecentProjectsSection recentProjects={recentProjectsSignal} />
         </div>
