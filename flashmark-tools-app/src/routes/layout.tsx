@@ -37,7 +37,7 @@ export const onRequest: RequestHandler = async ({ next, redirect, url, cookie })
 
 export default component$(() => {
   return (
-    <div class="min-h-screen flex flex-col bg-[]">
+    <div class="min-h-screen flex flex-col">
       <Header name='flashmark.tools' />
       <main class="flex flex-grow container mx-auto px-4 py-8">
         <Slot />
