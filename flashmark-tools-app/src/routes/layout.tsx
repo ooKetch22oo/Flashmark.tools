@@ -8,6 +8,11 @@ export const onRequest: RequestHandler = async ({ next, redirect, url, cookie })
   const accessToken = cookie.get('sb-access-token')?.value;
   const refreshToken = cookie.get('sb-refresh-token')?.value;
 
+  // Allow access to main landing pages and auth routes without authentication
+  if (url.pathname === '/' || url.pathname === '/landing' || url.pathname.startsWith('/auth/')) {
+    return next();
+  }
+
   if (accessToken && refreshToken) {
     const { data, error } = await supabase.auth.setSession({
       access_token: accessToken,
@@ -22,20 +27,12 @@ export const onRequest: RequestHandler = async ({ next, redirect, url, cookie })
       // Valid session, update cookies
       cookie.set('sb-access-token', data.session.access_token, { sameSite: 'strict' });
       cookie.set('sb-refresh-token', data.session.refresh_token, { sameSite: 'strict' });
+      return next();
     }
   }
 
-  // Allow access to auth routes even if not authenticated
-  if (url.pathname.startsWith('/auth/')) {
-    return next();
-  }
-
   // Redirect to login if not authenticated and trying to access protected routes
-  if (!accessToken && !url.pathname.startsWith('/auth/')) {
-    throw redirect(302, '/auth/login');
-  }
-
-  return next();
+  throw redirect(302, '/auth/login');
 };
 
 export default component$(() => {
