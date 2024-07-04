@@ -11,6 +11,13 @@ export interface Project {
   personas: number;
 }
 
+export interface UserStats {
+  toolsUsed: number;
+  personasCreated: number;
+  totalHoursSaved: number;
+  remainingTokens: any;
+}
+
 export const onRequest: RequestHandler = async ({ redirect, url, sharedMap }) => {
   const { data: { session } } = await supabase.auth.getSession();
   if (!session) {
@@ -122,7 +129,7 @@ export default component$(() => {
       </header>
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 p-4 grow overflow-auto">
         <WelcomeSection welcomeMessage={welcomeMessage} />
-        <UserStatsSection userStats={computedUserStats.value} />
+        <UserStatsSection userStats={computedUserStats} />
         <div class="col-span-1 md:col-span-2">
           <RecentProjectsSection recentProjects={recentProjectsSignal} />
         </div>
